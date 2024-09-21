@@ -395,3 +395,34 @@ fontSelector.addEventListener('change', function() {
 
 updateContent();
 
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Function to show the reminder
+    function showReminder() {
+        const reminder = document.getElementById('reminder-bookmark');
+        reminder.style.display = 'block';
+    }
+
+    // Function to dismiss the reminder
+    document.getElementById('dismiss-reminder').addEventListener('click', () => {
+        const reminder = document.getElementById('reminder-bookmark');
+        reminder.style.display = 'none';
+        localStorage.setItem('reminderDismissed', 'true');
+    });
+
+    // Check if the reminder has been dismissed
+    if (!localStorage.getItem('reminderDismissed')) {
+        // Show the reminder immediately when the page loads
+        showReminder();
+        
+        // Show reminder every hour
+        setInterval(() => {
+            if (!localStorage.getItem('reminderDismissed')) {
+                showReminder();
+            }
+        }, 3600000); // 1 hour in milliseconds
+    }
+});
+
+
