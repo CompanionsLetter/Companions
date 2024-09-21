@@ -162,7 +162,7 @@ main {
 
 .small-button {
     display: inline-block;
-    background-color: #4CAF50; /* Green */
+    background-color: #e28de2; /* Green */
     color: white;
     padding: 5px 10px; /* Smaller padding */
     text-align: center;
@@ -173,7 +173,7 @@ main {
 }
 
 .small-button:hover {
-    background-color: #45a049; /* Darker green */
+    background-color: #e498eb; /* Darker green */
 }
 
 .footer {
@@ -242,3 +242,55 @@ main {
         height: auto; /* Maintain aspect ratio */
     }
 }
+
+#reminder-bookmark {
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it appears above other content */
+}
+#reminder-bookmark p {
+    margin: 0;
+}
+#reminder-bookmark button {
+    margin-top: 5px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#reminder-bookmark button:hover {
+    background-color: #0056b3;
+}
+
+
+/* For WebKit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c7a3c7;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #e0bddf;
+}
+
+
+img {
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+    filter: brightness(90%);
+}
+
+
