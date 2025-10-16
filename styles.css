@@ -5,91 +5,511 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-    line-height: 1.6;
-    display: flex;
-    flex-direction: column;
+    font-family: 'EB Garamond', 'Georgia', serif;
+    background-color: #f8f5f0;
+    color: #3a3a3a;
+    line-height: 1.7;
     min-height: 100vh;
-    transition: background 0.3s;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d9c9b6' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
-header {
-    background: #fff;
-    padding: 20px;
+/* Workshop Layout */
+.workshop-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background: linear-gradient(to bottom, #5a3e36, #3a2a24);
+    color: #f0e6d2;
+    padding: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 20;
+    overflow-y: auto; /* Allow sidebar to scroll if content is too tall */
+}
+
+.sidebar-header {
+    padding: 1.5rem 1rem;
     text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(240, 230, 210, 0.2);
+}
+
+.sidebar-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+    color: #f0e6d2;
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 1rem 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.nav-item {
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    position: relative;
+}
+
+.nav-item.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-weight: 600;
+}
+
+.nav-item:hover {
+    background-color: rgba(240, 230, 210, 0.1);
+    border-left-color: #f0e6d2;
+}
+
+.nav-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #f0e6d2;
+    transition: width 0.3s ease;
+}
+
+.nav-item:hover::after {
+    width: 100%;
+}
+
+.nav-item.active {
+    background-color: rgba(240, 230, 210, 0.15);
+    border-left-color: #f0e6d2;
+}
+
+.nav-item i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.nav-item:hover i {
+    transform: translateX(3px);
+}
+
+.nav-item.active i {
+    transform: scale(1.2);
+}
+
+.sidebar-footer {
+    padding: 1rem;
+    border-top: 1px solid rgba(240, 230, 210, 0.2);
+    font-size: 0.8rem;
+    text-align: center;
+    color: rgba(240, 230, 210, 0.7);
+}
+
+/* Content Area Styles */
+.content-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f5f0;
+    position: relative;
+    margin-left: 250px; /* Match sidebar width */
+    min-height: 100vh;
+}
+
+.content-header {
+    background: linear-gradient(to bottom, #f0e6d2, #e6d7c3);
+    color: #5a3e36;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+
+
+.page-title {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    margin: 0 0 10px;
+    color: #5a3e36;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
 }
 
 h1 {
     margin-bottom: 10px;
-    font-size: 2.5rem;
-    color: #5a3e36;
+    font-size: 2.8rem;
+    color: #4a3c2d;
+    font-weight: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Cinzel', 'Times New Roman', serif;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    position: relative;
 }
 
+.subtitle {
+    font-size: 1.1rem;
+    color: #6b5b4b;
+    font-weight: normal;
+    font-style: italic;
+    margin-bottom: 15px;
+    letter-spacing: 0.5px;
+}
+
+.header-decoration {
+    font-size: 1.8rem;
+    color: #8a7a6a;
+    margin-bottom: 15px;
+}
+
+.header-divider {
+    width: 80%;
+    max-width: 400px;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #d9c9b6, transparent);
+    margin: 15px auto 0;
+}
+
+/* Pages Container */
+.pages-container {
+    flex-grow: 1;
+    padding: 1.5rem;
+    scroll-behavior: smooth;
+}
+
+.page {
+    display: none;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(20px);
+}
+
+.page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Button and Control Styles */
 .controls, .font-controls {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0;
+    margin: 15px 0;
+    flex-wrap: wrap;
 }
 
 .nav-button, .font-size-btn {
-    background: #5a3e36;
+    background: #6b5b4b;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 12px 24px;
     cursor: pointer;
-    margin: 0 5px;
-    border-radius: 5px;
-    transition: background 0.3s, transform 0.2s;
+    margin: 5px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: 'Georgia', serif;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .nav-button:hover, .font-size-btn:hover {
-    background: #7d5b4e;
-    transform: scale(1.05);
+    background: #8a7a6a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-#chapter-selector {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    margin: 0 5px;
-    transition: border 0.3s;
-}
-
-#chapter-selector:hover {
-    border-color: #5a3e36;
-}
-
-main {
-    display: flex;
-    flex-direction: column;
+.action-button {
+    background-color: #7d5a50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    flex: 1;
+    margin-top: 1.5rem;
 }
 
-#letter-content {
-    padding: 20px;
-    margin: 20px auto;
+.action-button:hover {
+    background-color: #5a3e36;
+}
+
+.action-button i {
+    margin-right: 8px;
+}
+
+#chapter-selector, #font-selector {
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #d9c9b6;
+    margin: 5px;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    color: #4a3c2d;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    min-width: 150px;
+}
+
+#chapter-selector:hover, #font-selector:hover {
+    border-color: #8a7a6a;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Bible Study Guide Styles - Removed as requested */
+
+/* Bible Study Guide Section Styles - Removed as requested */
+
+/* Letter Page Styles */
+#letter-page {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.letter-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.letter-main {
+    padding: 1rem;
     max-width: 800px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: font-size 0.3s;
-    text-align: center; /* Center text */
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 5;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0d0c1;
+}
+
+.letter-content {
+    padding: 2rem;
+    margin-top: 1.5rem;
+    position: relative;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    text-align: justify;
+}
+
+/* Daily Verse Page Styles */
+#daily-verse-page {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.daily-verse-container {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0d0c1;
+    text-align: center;
+}
+
+.daily-verse-container h2 {
+    color: #5a3e36;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 2rem;
+}
+
+.verse-of-the-day {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #f8f5f0;
+    border-radius: 5px;
+    border-left: 4px solid #7d5a50;
+}
+
+.verse-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.verse-reference {
+    font-weight: 600;
+    color: #7d5a50;
+    text-align: right;
+}
+
+/* Author Note Page Styles */
+#note-page {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.author-note {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0d0c1;
+}
+
+.author-note h2 {
+    color: #5a3e36;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.author-message {
+    line-height: 1.8;
+}
+
+.signature {
+    margin-top: 2rem;
+    font-style: italic;
+    text-align: right;
+}
+
+/* Settings Page Styles */
+#settings-page {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.settings-container {
+    background-color: #fff;
+    padding: 2.5rem;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0d0c1;
+}
+
+.settings-container h2 {
+    color: #5a3e36;
+    font-family: 'Cinzel', serif;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.settings-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e0d0c1;
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.settings-section h3 {
+    color: #7d5a50;
+    margin-bottom: 1rem;
+}
+
+.setting-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.setting-group label {
+    width: 120px;
+    font-weight: 600;
+}
+
+.setting-select {
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #d9c9b6;
+    background-color: #f8f5f0;
+    font-family: inherit;
+    font-size: 0.9rem;
+    width: 200px;
+}
+
+#letter-content::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid rgba(107, 91, 75, 0.1);
+    border-radius: 4px;
+    pointer-events: none;
 }
 
 /* Ensure header and footer remain fixed */
 header, footer {
     text-align: center;
-    background-color: #dfcdcd; /* Dark theme */
-    color: #fff;
-    padding: 15px 0;
     position: relative;
     width: 100%;
+}
+
+footer {
+    background-color: #e6d7c3;
+    color: #4a3c2d;
+    padding: 30px 0;
+    margin-top: 40px;
+    border-top: 1px solid #d9c9b6;
+}
+
+.footer-decoration {
+    width: 60%;
+    max-width: 400px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #8a7a6a, transparent);
+    margin: 0 auto 20px;
+}
+
+.footer-verse {
+    font-style: italic;
+    margin-top: 20px;
+    color: #6b5b4b;
+    font-size: 1rem;
+}
+
+.scroll-decoration {
+    font-size: 1.5rem;
+    color: #d9c9b6;
+    margin: 10px 0;
+    padding: 10px 0;
+    background-color: #fff;
+}
+
+.scroll-decoration.top {
+    margin-bottom: 0;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0d0c1;
+}
+
+.scroll-decoration.bottom {
+    margin-top: 0;
+    padding-top: 20px;
+    border-top: 1px solid #e0d0c1;
 }
 
 /* Constrain the content area */
@@ -104,8 +524,8 @@ header, footer {
     margin: 0 auto;
     padding: 20px;
     max-width: 800px; /* Restrict max width */
-    min-height: calc(100vh - 140px); /* Leave space for header and footer */
     box-sizing: border-box;
+    background-color: #fff;
 }
 
 /* Ensure content stays between header and footer */
@@ -122,25 +542,61 @@ main {
 }
 
 .verse {
-    text-align: center; /* Center the text */
-    margin: 10px 0; /* Space between verses */
+    text-align: center;
+    margin: 18px 0;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: #3a3a3a;
+    transition: transform 0.3s ease;
 }
 
 .verse-number {
-    font-weight: bold; /* Highlight the verse number */
-    margin-right: 2px; /* Space between number and text */
-    font-size: 10px;
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: 0.8rem;
+    color: #8a7a6a;
+    vertical-align: top;
+    font-family: 'Times New Roman', serif;
+    transition: color 0.3s ease;
+}
 
+.verse:hover .verse-number {
+    color: #8b5e50;
 }
 
 
-/* Optional: Styling for the chapter description */
+/* Styling for the chapter description */
 #chapter-description {
-    font-size: 30px;
-    margin: 20px auto;
+    font-size: 1.5rem;
+    margin: 15px auto 25px;
     font-style: italic;
-    color: #555;
+    color: #6b5b4b;
     max-width: 800px;
+    letter-spacing: 0.5px;
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+    background-color: #fff;
+}
+
+#chapter-description::before,
+#chapter-description::after {
+    content: '—';
+    color: #d9c9b6;
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+#chapter-title {
+    font-family: 'Times New Roman', serif;
+    font-size: 2.2rem;
+    color: #4a3c2d;
+    margin: 20px 0 10px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    padding: 10px 0;
+    background-color: #fff;
 }
 
 /* Adjust font-size button styles */
@@ -162,18 +618,24 @@ main {
 
 .small-button {
     display: inline-block;
-    background-color: #e28de2; /* Green */
+    background-color: #6b5b4b;
     color: white;
-    padding: 5px 10px; /* Smaller padding */
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    font-size: 14px; /* Smaller font size */
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: none;
+    cursor: pointer;
 }
 
 .small-button:hover {
-    background-color: #e498eb; /* Darker green */
+    background-color: #8a7a6a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .footer {
@@ -182,86 +644,160 @@ main {
 }
 
 
-.alone-content {
-    max-width: 800px; /* Limit the width for better readability */
-    margin: 20px auto; /* Center the content */
-    padding: 15px; /* Add some padding */
-    background-color: #f9f9f9; /* Light background color */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
-
-.alone-content h2, .alone-content h3 {
-    color: #333; /* Dark color for headings */
-    margin-top: 20px; /* Space above headings */
-}
-
-.alone-content p {
-    line-height: 1.6; /* Improved line spacing */
-    color: #555; /* Slightly lighter color for text */
-}
-
-.alone-content ul {
-    margin-left: 20px; /* Indent list items */
-}
-
-.section-image {
-    max-width: 100%; /* Responsive image */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Make the image a block element */
-    margin: 15px 0; /* Space above and below the image */
-}
+/* Bible Study Guide Content Styles - Removed as requested */
 
 /* Mobile Styles */
 @media (max-width: 600px) {
-    .alone-content {
-        padding: 10px; /* Less padding on smaller screens */
-        margin: 10px; /* Adjust margin */
-    }
-
-    .alone-content h2 {
-        font-size: 1.5em; /* Smaller heading size */
-    }
-
-    .alone-content h3 {
-        font-size: 1.2em; /* Smaller subheading size */
-    }
-
-    .alone-content p {
-        font-size: 1em; /* Standardize text size */
-    }
-
     .small-button {
         font-size: 0.9em; /* Adjust button size */
         padding: 10px; /* Adjust padding */
         width: 100%; /* Full width for the button */
     }
-
-    img.section-image {
-        max-width: 100%; /* Ensure the image fits within the screen */
-        height: auto; /* Maintain aspect ratio */
-    }
 }
 
+/* Reminder Bookmark */
 #reminder-bookmark {
-    background-color: #f0f0f0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Ensure it appears above other content */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f0e6d2;
+    border-radius: 5px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    border-left: 4px solid #7d5a50;
+    padding: 15px;
+    max-width: 300px;
+    z-index: 1000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
-#reminder-bookmark p {
-    margin: 0;
+
+#reminder-bookmark.show {
+    opacity: 1;
+    transform: translateY(0);
 }
-#reminder-bookmark button {
-    margin-top: 5px;
-    background-color: #007BFF;
-    color: white;
+
+.reminder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reminder-icon {
+    font-size: 1.5rem;
+    color: #7d5a50;
+    margin-bottom: 10px;
+}
+
+#reminder-message {
+    margin: 0 0 10px;
+    text-align: center;
+    font-weight: 500;
+}
+
+#dismiss-reminder {
+    background-color: #7d5a50;
+    color: #fff;
     border: none;
     padding: 5px 10px;
     border-radius: 3px;
     cursor: pointer;
+    font-family: inherit;
+    font-size: 0.8rem;
+    transition: background-color 0.3s;
 }
-#reminder-bookmark button:hover {
-    background-color: #0056b3;
+
+#dismiss-reminder:hover {
+    background-color: #5a3e36;
+}
+
+/* Mobile Navigation Toggle Button */
+#nav-toggle {
+    display: none;
+    cursor: pointer;
+    z-index: 50;
+    transition: all 0.3s ease;
+}
+
+#nav-toggle:hover {
+    background-color: #e6d7c3;
+}
+
+/* Sidebar Overlay */
+#sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(58, 42, 36, 0.5);
+    z-index: 30;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .workshop-layout {
+        flex-direction: column;
+        overflow: visible; /* Allow scrolling on mobile */
+    }
+    
+    #nav-toggle {
+        display: flex;
+    }
+    
+    .content-area {
+        margin-left: 0;
+        height: auto;
+        overflow: visible;
+        padding-top: 60px; /* Add space for the toggle button */
+    }
+    
+    .content-header {
+        padding: 1rem 0.5rem;
+    }
+    
+    .page-title {
+        font-size: 1.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+    }
+    
+    .letter-controls {
+        flex-direction: column;
+    }
+    
+    .nav-button {
+        margin: 0.5rem 0;
+    }
+    
+    #chapter-selector {
+        margin: 0.5rem 0;
+        width: 100%;
+    }
+    
+    .setting-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .setting-group label {
+        margin-bottom: 0.5rem;
+    }
+    
+    .setting-select {
+        width: 100%;
+    }
+    
+    #reminder-bookmark {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
 }
 
 
@@ -275,12 +811,37 @@ main {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #c7a3c7;
+    background: #7d5a50;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #e0bddf;
+    background: #5a3e36;
+}
+
+/* Scroll indicator */
+.content-area::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 250px; /* Match sidebar width */
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, #7d5a50, #5a3e36);
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    z-index: 100;
+}
+
+.content-area.scrolled::before {
+    transform: scaleX(var(--scroll-percentage, 0));
+}
+
+@media (max-width: 768px) {
+    .content-area::before {
+        left: 0;
+    }
 }
 
 
@@ -292,5 +853,4 @@ img:hover {
     transform: scale(1.1);
     filter: brightness(90%);
 }
-
 

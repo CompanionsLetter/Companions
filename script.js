@@ -332,10 +332,33 @@ const chapterTitle = document.getElementById('chapter-title');
 const letterContent = document.getElementById('letter-content');
 const chapterDescription = document.getElementById('chapter-description');
 
-function updateContent() {
-    chapterTitle.innerText = chapters[currentChapter].title;
-    letterContent.innerHTML = chapters[currentChapter].content;
-    chapterDescription.innerText = chapters[currentChapter].description;
+function updateContent(animate = true) {
+    if (animate) {
+        // Fade out content
+        letterContent.style.opacity = 0;
+        chapterTitle.style.opacity = 0;
+        chapterDescription.style.opacity = 0;
+        
+        // Wait for fade out to complete
+        setTimeout(() => {
+            // Update content
+            chapterTitle.innerText = chapters[currentChapter].title;
+            letterContent.innerHTML = chapters[currentChapter].content;
+            chapterDescription.innerText = chapters[currentChapter].description;
+            
+            // Fade in content
+            setTimeout(() => {
+                letterContent.style.opacity = 1;
+                chapterTitle.style.opacity = 1;
+                chapterDescription.style.opacity = 1;
+            }, 50);
+        }, 300);
+    } else {
+        // Update content without animation
+        chapterTitle.innerText = chapters[currentChapter].title;
+        letterContent.innerHTML = chapters[currentChapter].content;
+        chapterDescription.innerText = chapters[currentChapter].description;
+    }
 }
 
 chapters.forEach((chapter, index) => {
@@ -347,14 +370,26 @@ chapters.forEach((chapter, index) => {
 
 chapterSelector.addEventListener('change', (event) => {
     currentChapter = parseInt(event.target.value);
-    updateContent();
+    updateContent(true);
+    // Save current chapter when changed
+    localStorage.setItem('currentChapter', currentChapter);
+});
+chapterSelector.addEventListener('change', () => {
+    currentChapter = parseInt(chapterSelector.value);
+    updateContent(true);
+    // Save current chapter
+    localStorage.setItem('currentChapter', currentChapter);
+    // Scroll to top smoothly
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
 document.getElementById('prev-chapter').addEventListener('click', () => {
     if (currentChapter > 0) {
         currentChapter--;
         chapterSelector.value = currentChapter;
-        updateContent();
+        updateContent(true);
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 });
 
@@ -362,9 +397,29 @@ document.getElementById('next-chapter').addEventListener('click', () => {
     if (currentChapter < chapters.length - 1) {
         currentChapter++;
         chapterSelector.value = currentChapter;
-        updateContent();
+        updateContent(true);
+        // Scroll to top smoothly
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 });
+
+// Load saved font size preference
+function loadFontSizePreference() {
+    const savedSize = localStorage.getItem('fontSize');
+    if (savedSize) {
+        letterContent.style.fontSize = savedSize;
+        // Set the correct button as active
+        document.querySelectorAll('.font-size-btn').forEach(b => {
+            if ((savedSize === '20px' && b.getAttribute('data-size') === 'small') ||
+                (savedSize === '24px' && b.getAttribute('data-size') === 'medium') ||
+                (savedSize === '28px' && b.getAttribute('data-size') === 'large')) {
+                b.classList.add('active');
+            } else {
+                b.classList.remove('active');
+            }
+        });
+    }
+}
 
 const fontSizeBtns = document.querySelectorAll('.font-size-btn');
 fontSizeBtns.forEach(btn => {
@@ -385,44 +440,432 @@ fontSizeBtns.forEach(btn => {
                 break;
         }
         letterContent.style.fontSize = newSize;
+        // Save preference
+        localStorage.setItem('fontSize', newSize);
     });
 });
+
+// Load saved font family preference
+function loadFontFamilyPreference() {
+    const savedFont = localStorage.getItem('fontFamily');
+    if (savedFont) {
+        letterContent.style.fontFamily = savedFont;
+        const fontSelector = document.getElementById('font-selector');
+        fontSelector.value = savedFont;
+    }
+}
 
 const fontSelector = document.getElementById('font-selector');
 fontSelector.addEventListener('change', function() {
     letterContent.style.fontFamily = this.value;
+    // Save preference
+    localStorage.setItem('fontFamily', this.value);
 });
 
-updateContent();
+// Add hover effect to verses
+function setupVerseHoverEffects() {
+    const verses = document.querySelectorAll('.verse');
+    verses.forEach(verse => {
+        verse.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(10px)';
+        });
+        verse.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0)';
+        });
+    });
+}
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Function to show the reminder
+// Reminder functionality
+function setupReminderFunctionality() {
+    // Function to show the reminder with animation
     function showReminder() {
         const reminder = document.getElementById('reminder-bookmark');
         reminder.style.display = 'block';
+        setTimeout(() => {
+            reminder.style.opacity = '1';
+            reminder.style.transform = 'translateY(0)';
+        }, 10);
+    }
+
+    // Function to hide the reminder with animation
+    function hideReminder() {
+        const reminder = document.getElementById('reminder-bookmark');
+        reminder.style.opacity = '0';
+        reminder.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            reminder.style.display = 'none';
+        }, 300);
     }
 
     // Function to dismiss the reminder
     document.getElementById('dismiss-reminder').addEventListener('click', () => {
-        const reminder = document.getElementById('reminder-bookmark');
-        reminder.style.display = 'none';
-        localStorage.setItem('reminderDismissed', 'true');
+        hideReminder();
+        const now = new Date();
+        localStorage.setItem('reminderDismissedTime', now.getTime());
     });
 
-    // Check if the reminder has been dismissed
-    if (!localStorage.getItem('reminderDismissed')) {
-        // Show the reminder immediately when the page loads
-        showReminder();
-        
-        // Show reminder every hour
-        setInterval(() => {
-            if (!localStorage.getItem('reminderDismissed')) {
-                showReminder();
-            }
-        }, 3600000); // 1 hour in milliseconds
+    // Check if the reminder has been dismissed within the last hour
+    const dismissedTime = localStorage.getItem('reminderDismissedTime');
+    const now = new Date().getTime();
+    
+    if (!dismissedTime || (now - dismissedTime > 3600000)) { // 1 hour in milliseconds
+        // Show the reminder after a short delay for better UX
+        setTimeout(showReminder, 2000);
     }
-});
+    
+    // Setup reminder to reappear every hour if the page stays open
+    setInterval(() => {
+        const currentDismissedTime = localStorage.getItem('reminderDismissedTime');
+        const currentTime = new Date().getTime();
+        
+        if (!currentDismissedTime || (currentTime - currentDismissedTime > 3600000)) {
+            showReminder();
+        }
+    }, 3600000); // Check every hour
+}
 
+// Daily Verse functionality
+function setupDailyVersePage() {
+    const verseDisplay = document.getElementById('verse-of-the-day');
+    const verseReference = document.getElementById('verse-reference');
+    const refreshButton = document.getElementById('refresh-verse');
+    const countdownHours = document.getElementById('countdown-hours');
+    const countdownMinutes = document.getElementById('countdown-minutes');
+    const countdownSeconds = document.getElementById('countdown-seconds');
+    
+    // Bible verses collection - organized by themes
+    const bibleVerses = {
+        love: [
+            { text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.", reference: "John 3:16" },
+            { text: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It does not dishonor others, it is not self-seeking, it is not easily angered, it keeps no record of wrongs.", reference: "1 Corinthians 13:4-5" },
+            { text: "Above all, love each other deeply, because love covers over a multitude of sins.", reference: "1 Peter 4:8" },
+            { text: "And now these three remain: faith, hope and love. But the greatest of these is love.", reference: "1 Corinthians 13:13" },
+            { text: "Dear friends, let us love one another, for love comes from God. Everyone who loves has been born of God and knows God.", reference: "1 John 4:7" },
+            { text: "Greater love has no one than this: to lay down one's life for one's friends.", reference: "John 15:13" }
+        ],
+        wisdom: [
+            { text: "Trust in the LORD with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.", reference: "Proverbs 3:5-6" },
+            { text: "The fear of the LORD is the beginning of wisdom, and knowledge of the Holy One is understanding.", reference: "Proverbs 9:10" },
+            { text: "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.", reference: "James 1:5" },
+            { text: "Be very careful, then, how you live—not as unwise but as wise, making the most of every opportunity, because the days are evil.", reference: "Ephesians 5:15-16" },
+            { text: "For the LORD gives wisdom; from his mouth come knowledge and understanding.", reference: "Proverbs 2:6" },
+            { text: "The wise in heart accept commands, but a chattering fool comes to ruin.", reference: "Proverbs 10:8" }
+        ],
+        holySpirit: [
+            { text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law.", reference: "Galatians 5:22-23" },
+            { text: "And I will ask the Father, and he will give you another advocate to help you and be with you forever— the Spirit of truth.", reference: "John 14:16-17" },
+            { text: "Do you not know that your bodies are temples of the Holy Spirit, who is in you, whom you have received from God? You are not your own.", reference: "1 Corinthians 6:19" },
+            { text: "But when he, the Spirit of truth, comes, he will guide you into all the truth. He will not speak on his own; he will speak only what he hears, and he will tell you what is yet to come.", reference: "John 16:13" },
+            { text: "And hope does not put us to shame, because God's love has been poured out into our hearts through the Holy Spirit, who has been given to us.", reference: "Romans 5:5" }
+        ],
+        overcomingLust: [
+            { text: "Flee from sexual immorality. All other sins a person commits are outside the body, but whoever sins sexually, sins against their own body.", reference: "1 Corinthians 6:18" },
+            { text: "But I tell you that anyone who looks at a woman lustfully has already committed adultery with her in his heart.", reference: "Matthew 5:28" },
+            { text: "For everything in the world—the lust of the flesh, the lust of the eyes, and the pride of life—comes not from the Father but from the world.", reference: "1 John 2:16" },
+            { text: "Put to death, therefore, whatever belongs to your earthly nature: sexual immorality, impurity, lust, evil desires and greed, which is idolatry.", reference: "Colossians 3:5" },
+            { text: "So I say, walk by the Spirit, and you will not gratify the desires of the flesh.", reference: "Galatians 5:16" },
+            { text: "No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear. But when you are tempted, he will also provide a way out so that you can endure it.", reference: "1 Corinthians 10:13" }
+        ],
+        strength: [
+            { text: "I can do all this through him who gives me strength.", reference: "Philippians 4:13" },
+            { text: "Be strong and courageous. Do not be afraid; do not be discouraged, for the LORD your God will be with you wherever you go.", reference: "Joshua 1:9" },
+            { text: "But those who hope in the LORD will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.", reference: "Isaiah 40:31" },
+            { text: "The LORD is my strength and my shield; my heart trusts in him, and he helps me.", reference: "Psalm 28:7" }
+        ],
+        comfort: [
+            { text: "The LORD is my shepherd, I lack nothing. He makes me lie down in green pastures, he leads me beside quiet waters, he refreshes my soul.", reference: "Psalm 23:1-3" },
+            { text: "For I know the plans I have for you, declares the LORD, plans to prosper you and not to harm you, plans to give you hope and a future.", reference: "Jeremiah 29:11" },
+            { text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.", reference: "Romans 8:28" },
+            { text: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.", reference: "Philippians 4:6" },
+            { text: "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!", reference: "2 Corinthians 5:17" }
+        ]
+    };
+    
+    // Flatten the verses array for random selection
+    const allVerses = [];
+    Object.values(bibleVerses).forEach(category => {
+        category.forEach(verse => allVerses.push(verse));
+    });
+    
+    // Function to get a random verse
+    function getRandomVerse() {
+        // Check if we have a saved verse and when it was last updated
+        const savedVerse = localStorage.getItem('dailyVerse');
+        const lastUpdated = localStorage.getItem('verseLastUpdated');
+        const now = new Date().getTime();
+        
+        // If we have a saved verse and it's less than 24 hours old, use it
+        if (savedVerse && lastUpdated && (now - parseInt(lastUpdated) < 24 * 60 * 60 * 1000)) {
+            return JSON.parse(savedVerse);
+        }
+        
+        // Otherwise, get a new random verse
+        const randomIndex = Math.floor(Math.random() * allVerses.length);
+        const newVerse = allVerses[randomIndex];
+        
+        // Save the new verse and update time
+        localStorage.setItem('dailyVerse', JSON.stringify(newVerse));
+        localStorage.setItem('verseLastUpdated', now.toString());
+        
+        return newVerse;
+    }
+    
+    // Function to display the verse with animation
+    function displayRandomVerse() {
+        const verse = getRandomVerse();
+        
+        // Add animation
+        verseDisplay.style.opacity = '0';
+        verseReference.style.opacity = '0';
+        
+        setTimeout(() => {
+            verseDisplay.textContent = verse.text;
+            verseReference.textContent = verse.reference;
+            verseDisplay.style.opacity = '1';
+            verseReference.style.opacity = '1';
+        }, 300);
+        
+        // Update the countdown timer
+        updateCountdown();
+    }
+    
+    // Function to update the countdown timer
+    function updateCountdown() {
+        const lastUpdated = parseInt(localStorage.getItem('verseLastUpdated') || new Date().getTime());
+        const now = new Date().getTime();
+        const nextUpdate = lastUpdated + (24 * 60 * 60 * 1000); // 24 hours in milliseconds
+        let timeRemaining = nextUpdate - now;
+        
+        // If time has elapsed, get a new verse
+        if (timeRemaining <= 0) {
+            // Get a new verse and reset the timer
+            const verse = getRandomVerse();
+            verseDisplay.textContent = verse.text;
+            verseReference.textContent = verse.reference;
+            
+            // Reset countdown
+            timeRemaining = 24 * 60 * 60 * 1000;
+        }
+        
+        // Calculate hours, minutes, seconds
+        const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+        // Update the countdown display
+        countdownHours.textContent = hours.toString().padStart(2, '0');
+        countdownMinutes.textContent = minutes.toString().padStart(2, '0');
+        countdownSeconds.textContent = seconds.toString().padStart(2, '0');
+    }
+    
+    // Update countdown every second
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    
+    // Display a verse on page load
+    displayRandomVerse();
+    
+    // Setup refresh button - force a new verse regardless of time
+    if (refreshButton) {
+        refreshButton.addEventListener('click', () => {
+            // Clear the saved verse to force a new one
+            localStorage.removeItem('dailyVerse');
+            localStorage.removeItem('verseLastUpdated');
+            displayRandomVerse();
+        });
+    }
+}
+
+// Navigation functionality
+function setupNavigation() {
+    const navItems = document.querySelectorAll('.nav-item');
+    const pages = document.querySelectorAll('.page');
+    
+    // Function to show a specific page
+    function showPage(pageId) {
+        // Hide all pages
+        pages.forEach(page => {
+            page.classList.remove('active');
+        });
+        
+        // Show the selected page
+        const selectedPage = document.getElementById(pageId);
+        if (selectedPage) {
+            selectedPage.classList.add('active');
+        }
+        
+        // Update active nav item
+        navItems.forEach(item => {
+            if (item.getAttribute('data-page') === pageId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+        
+        // Save the current page to localStorage
+        localStorage.setItem('currentPage', pageId);
+    }
+    
+    // Add click event to nav items
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const pageId = this.getAttribute('data-page');
+            showPage(pageId);
+        });
+    });
+    
+    // Load saved page preference or default to letter page
+    const savedPage = localStorage.getItem('currentPage') || 'letter-page';
+    showPage(savedPage);
+    
+    // Return the showPage function for use elsewhere
+    return showPage;
+}
+
+
+
+// Scroll indicator functionality
+function setupScrollIndicator() {
+    const contentArea = document.querySelector('.content-area');
+    
+    contentArea.addEventListener('scroll', () => {
+        const scrollTop = contentArea.scrollTop;
+        const scrollHeight = contentArea.scrollHeight;
+        const clientHeight = contentArea.clientHeight;
+        
+        // Calculate scroll percentage
+        const scrollPercentage = scrollTop / (scrollHeight - clientHeight);
+        
+        // Apply the scroll percentage as a CSS variable
+        contentArea.style.setProperty('--scroll-percentage', scrollPercentage);
+        
+        // Add/remove scrolled class based on scroll position
+        if (scrollTop > 10) {
+            contentArea.classList.add('scrolled');
+        } else {
+            contentArea.classList.remove('scrolled');
+        }
+    });
+}
+
+// Mobile navigation functionality
+function setupMobileNav() {
+    const navToggle = document.getElementById('nav-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const mainContent = document.querySelector('.flex-1');
+    
+    // Toggle sidebar when button is clicked
+    navToggle.addEventListener('click', toggleSidebar);
+    
+    // Close sidebar when overlay is clicked
+    overlay.addEventListener('click', closeSidebar);
+    
+    // Close sidebar when a nav item is clicked on mobile
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            if (window.innerWidth < 768) { // Only on mobile
+                closeSidebar();
+            }
+        });
+    });
+    
+    // Function to toggle sidebar
+    function toggleSidebar() {
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+        
+        if (isOpen) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    }
+    
+    // Function to open sidebar
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+        setTimeout(() => {
+            overlay.classList.remove('opacity-0');
+        }, 10);
+        
+        // Change toggle icon to X
+        navToggle.innerHTML = '<i class="fas fa-times text-deepsepia"></i>';
+    }
+    
+    // Function to close sidebar
+    function closeSidebar() {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('opacity-0');
+        
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+        }, 300);
+        
+        // Change toggle icon back to bars
+        navToggle.innerHTML = '<i class="fas fa-bars text-deepsepia"></i>';
+    }
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768) {
+            // On desktop, ensure sidebar is visible
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.add('hidden', 'opacity-0');
+        } else {
+            // On mobile, ensure sidebar is hidden by default
+            if (!sidebar.classList.contains('-translate-x-full')) {
+                closeSidebar();
+            }
+        }
+    });
+}
+
+// Main initialization when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Setup navigation first
+    const showPage = setupNavigation();
+    
+    // Setup mobile navigation
+    setupMobileNav();
+    
+    // Setup letter page functionality
+    // Load saved chapter if exists
+    const savedChapter = localStorage.getItem('currentChapter');
+    if (savedChapter !== null) {
+        currentChapter = parseInt(savedChapter);
+        chapterSelector.value = currentChapter;
+    }
+    
+    // Update content without animation on initial load
+    updateContent(false);
+    
+    // Load saved preferences
+    loadFontSizePreference();
+    loadFontFamilyPreference();
+    
+    // Setup verse hover effects
+    setupVerseHoverEffects();
+    
+    // Add transition styles
+    letterContent.style.transition = 'opacity 0.3s ease';
+    chapterTitle.style.transition = 'opacity 0.3s ease';
+    chapterDescription.style.transition = 'opacity 0.3s ease';
+    
+    // Setup daily verse page
+    setupDailyVersePage();
+    
+    // Setup reminder functionality
+    setupReminderFunctionality();
+    
+    // Setup scroll indicator
+    setupScrollIndicator();
+    
+    // Add CSS transitions for verses
+    const verses = document.querySelectorAll('.verse');
+    verses.forEach(verse => {
+        verse.style.transition = 'transform 0.3s ease';
+    });
+});
 
