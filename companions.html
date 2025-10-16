@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Companions Letter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        parchment: '#f5f2e9',
+                        sepia: '#8b6b4a',
+                        deepsepia: '#5c3c1e',
+                        gold: '#c9a769',
+                        cream: '#f8f5ee',
+                        lightgold: '#e6d5b8',
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        display: ['Playfair Display', 'serif'],
+                        alt: ['EB Garamond', 'serif'],
+                    },
+                    boxShadow: {
+                        'elegant': '0 10px 30px -10px rgba(92, 60, 30, 0.15)',
+                        'page': '0 0 40px rgba(92, 60, 30, 0.08)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8f5ee;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23d4c8a8' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+        
+        .letter-container {
+            box-shadow: 0 10px 40px rgba(92, 60, 30, 0.1), 
+                        0 0 0 1px rgba(92, 60, 30, 0.05),
+                        inset 0 0 20px rgba(92, 60, 30, 0.05);
+            background-color: #f5f2e9;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a769' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            border-radius: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .letter-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(92, 60, 30, 0.15), 
+                      0 0 0 1px rgba(92, 60, 30, 0.08),
+                      inset 0 0 20px rgba(92, 60, 30, 0.05);
+        }
+        
+        .verse {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.8;
+            transition: all 0.3s ease;
+        }
+        
+        .verse-number {
+            position: absolute;
+            left: 0;
+            top: 0.2rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #c9a769;
+            transition: all 0.3s ease;
+            width: 2rem;
+            text-align: center;
+        }
+        
+        .verse:hover {
+            background-color: rgba(201, 167, 105, 0.05);
+            border-radius: 0.5rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .verse:hover .verse-number {
+            transform: scale(1.2);
+            color: #8b6b4a;
+        }
+        
+        .ornament {
+            opacity: 0.5;
+            letter-spacing: 0.5rem;
+        }
+        
+        .signature {
+            text-shadow: 0 0 3px rgba(201, 167, 105, 0.3);
+            font-size: 2.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .letter-container {
+                padding: 1.5rem !important;
+                margin: 1rem;
+                border-radius: 0.75rem;
+            }
+            
+            .text-xl {
+                font-size: 1.125rem;
+            }
+            
+            .verse {
+                padding-left: 2rem;
+            }
+        }
+
+        /* Improved styles for chapter navigation */
+        .chapter-nav {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            align-items: center;
+            background-color: rgba(248, 245, 238, 0.8);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 15px -5px rgba(92, 60, 30, 0.1);
+        }
+
+        .chapter-nav button {
+            background-color: transparent;
+            border: 1px solid #c9a769;
+            color: #5c3c1e;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .chapter-nav button:hover {
+            background-color: #c9a769;
+            color: #f5f2e9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px -2px rgba(201, 167, 105, 0.3);
+        }
+
+        .chapter-nav select {
+            background-color: #f5f2e9;
+            border: 1px solid #c9a769;
+            color: #5c3c1e;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            min-width: 220px;
+            font-family: 'Playfair Display', serif;
+            box-shadow: 0 2px 8px -2px rgba(92, 60, 30, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .chapter-nav select:focus {
+            outline: none;
+            border-color: #8b6b4a;
+            box-shadow: 0 0 0 3px rgba(201, 167, 105, 0.2);
+        }
+
+        /* Enhanced settings panel styles */
+        .settings-panel {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border: 1px solid rgba(201, 167, 105, 0.3);
+            border-radius: 0.75rem;
+            background-color: #f8f5ee;
+            box-shadow: 0 10px 30px -10px rgba(92, 60, 30, 0.1);
+        }
+
+        .settings-group {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(201, 167, 105, 0.2);
+        }
+        
+        .settings-group:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .settings-group h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #5c3c1e;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        .settings-group h3:before {
+            content: '•';
+            color: #c9a769;
+            margin-right: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .font-size-btn {
+            background-color: #f5f2e9;
+            border: 1px solid #c9a769;
+            color: #5c3c1e;
+            padding: 0.5rem 1rem;
+            margin-right: 0.75rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .font-size-btn.active, .font-size-btn:hover {
+            background-color: #c9a769;
+            color: #f5f2e9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px -2px rgba(201, 167, 105, 0.3);
+        }
+        
+        #font-selector {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid rgba(201, 167, 105, 0.3);
+            border-radius: 0.5rem;
+            background-color: #f5f2e9;
+            color: #5c3c1e;
+            font-family: 'Playfair Display', serif;
+            transition: all 0.3s ease;
+        }
+        
+        #font-selector:focus {
+            outline: none;
+            border-color: #c9a769;
+            box-shadow: 0 0 0 3px rgba(201, 167, 105, 0.2);
+        }
+
+        /* Improved page transitions */
+        .page {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            transform: translateY(20px);
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced daily verse styles */
+        .daily-verse-container {
+            background-color: #f5f2e9;
+            border: 1px solid rgba(201, 167, 105, 0.3);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(92, 60, 30, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .daily-verse-container:before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 8rem;
+            color: rgba(201, 167, 105, 0.1);
+            font-family: 'Playfair Display', serif;
+            line-height: 1;
+        }
+
+        .daily-verse-text {
+            font-size: 1.75rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #5c3c1e;
+            font-family: 'EB Garamond', serif;
+            position: relative;
+            z-index: 1;
+        }
+
+        .daily-verse-reference {
+            font-weight: 600;
+            color: #8b6b4a;
+            font-size: 1.1rem;
+            letter-spacing: 0.05rem;
+        }
+        
+        #refresh-verse {
+            margin-top: 2rem;
+            background-color: rgba(201, 167, 105, 0.2);
+            color: #5c3c1e;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        #refresh-verse:hover {
+            background-color: rgba(201, 167, 105, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px -2px rgba(201, 167, 105, 0.3);
+        }
+        
+        #refresh-verse i {
+            margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        #refresh-verse:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Improved reminder bookmark */
+        #reminder-bookmark {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #c9a769;
+            color: #f5f2e9;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            z-index: 100;
+            display: none;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            max-width: 300px;
+        }
+        
+        #reminder-bookmark h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+        }
+        
+        #dismiss-reminder {
+            background: none;
+            border: none;
+            color: rgba(245, 242, 233, 0.7);
+            transition: color 0.3s ease;
+        }
+        
+        #dismiss-reminder:hover {
+            color: #f5f2e9;
+        }
+        
+        /* Author note styling */
+        #author-note-page .bg-parchment {
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        #author-note-page .bg-parchment:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a769' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="font-serif text-deepsepia bg-parchment min-h-screen flex">
+    <!-- Mobile Nav Toggle Button -->
+    <button id="nav-toggle" class="fixed top-4 left-4 z-50 bg-cream p-3 rounded-lg shadow-elegant border border-gold/20 md:hidden flex items-center justify-center">
+        <i class="fas fa-bars text-deepsepia"></i>
+    </button>
+    
+    <!-- Sidebar Navigation -->
+    <nav id="sidebar" class="w-72 bg-cream border-r border-gold/20 p-6 fixed h-full shadow-elegant transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out z-40">
+        <div class="flex flex-col h-full">
+            <div class="mb-10 text-center">
+                <div class="flex justify-center mb-3">
+                    <i class="fas fa-cross text-gold text-xl"></i>
+                </div>
+                <h2 class="font-display text-3xl text-deepsepia mb-1 tracking-wide">Companions</h2>
+                <p class="text-sm text-sepia tracking-wider uppercase">Spiritual Guidance</p>
+                <div class="mt-4 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
+            </div>
+            
+            <ul class="space-y-3 flex-1">
+                <li>
+                    <a href="#" class="nav-item flex items-center p-4 rounded-lg text-deepsepia hover:bg-gold/10 hover:text-gold transition-colors" data-page="letter-page">
+                        <i class="fas fa-scroll mr-3 text-gold/70"></i>
+                        <span class="font-medium">The Letter</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item flex items-center p-4 rounded-lg text-deepsepia hover:bg-gold/10 hover:text-gold transition-colors" data-page="daily-verse-page">
+                        <i class="fas fa-book-bible mr-3 text-gold/70"></i>
+                        <span class="font-medium">Daily Verse</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item flex items-center p-4 rounded-lg text-deepsepia hover:bg-gold/10 hover:text-gold transition-colors" data-page="author-note-page">
+                        <i class="fas fa-feather mr-3 text-gold/70"></i>
+                        <span class="font-medium">Note from Author</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-item flex items-center p-4 rounded-lg text-deepsepia hover:bg-gold/10 hover:text-gold transition-colors" data-page="settings-page">
+                        <i class="fas fa-gear mr-3 text-gold/70"></i>
+                        <span class="font-medium">Settings</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="mt-auto pt-6 border-t border-gold/20">
+                <p class="text-xs text-sepia text-center"> Companions Letter</p>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Overlay for mobile when sidebar is open -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-deepsepia/50 z-30 hidden md:hidden transition-opacity duration-300 opacity-0"></div>
+    
+    <!-- Main Content -->
+    <div class="flex-1 md:pl-72 pl-0 transition-all duration-300">
+        <!-- Letter Page -->
+        <div id="letter-page" class="page active">
+            <div class="letter-container w-full max-w-4xl bg-parchment rounded-xl p-12 relative overflow-hidden mx-auto my-10 shadow-page">
+                <!-- Decorative corner elements -->
+                <div class="absolute top-6 left-6 w-20 h-20 border-t-2 border-l-2 border-gold opacity-60"></div>
+                <div class="absolute top-6 right-6 w-20 h-20 border-t-2 border-r-2 border-gold opacity-60"></div>
+                <div class="absolute bottom-6 left-6 w-20 h-20 border-b-2 border-l-2 border-gold opacity-60"></div>
+                <div class="absolute bottom-6 right-6 w-20 h-20 border-b-2 border-r-2 border-gold opacity-60"></div>
+                
+                <!-- Watermark -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                    <div class="text-[24rem] font-display font-bold text-gold opacity-[0.03] -mt-20 transform -rotate-6">C</div>
+                </div>
+                
+                <!-- Header -->
+                <header class="text-center mb-14 relative z-10">
+                    <div class="flex justify-center mb-6">
+                        <div class="w-20 h-px bg-gradient-to-r from-transparent via-gold to-transparent mx-3 mt-5"></div>
+                        <i class="fas fa-cross text-gold text-3xl mx-3"></i>
+                        <div class="w-20 h-px bg-gradient-to-l from-transparent via-gold to-transparent mx-3 mt-5"></div>
+                    </div>
+                    <h1 class="font-display text-5xl md:text-6xl font-bold mb-3 text-deepsepia tracking-wide">The Companions Letter</h1>
+                </header>
+
+                <!-- Chapter Navigation -->
+                <div class="chapter-navigation bg-cream/80 p-5 rounded-xl mb-10 flex flex-wrap items-center justify-between shadow-elegant border border-gold/10">
+                    <button id="prev-chapter" class="text-sepia hover:text-gold transition-colors px-4 py-2 rounded-lg hover:bg-parchment/50">
+                        <i class="fas fa-chevron-left mr-2"></i> Previous
+                    </button>
+                    
+                    <div class="flex-grow mx-4 relative">
+                        <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gold/60">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <select id="chapter-selector" class="w-full p-3 bg-parchment border border-gold/20 rounded-lg text-sepia appearance-none pr-10 font-medium shadow-sm focus:ring-1 focus:ring-gold/30 focus:outline-none">
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <button id="next-chapter" class="text-sepia hover:text-gold transition-colors px-4 py-2 rounded-lg hover:bg-parchment/50">
+                        Next <i class="fas fa-chevron-right ml-2"></i>
+                    </button>
+                </div>
+                
+                <!-- Chapter Title and Description -->
+                <div class="text-center mb-8">
+                    <h2 id="chapter-title" class="font-display text-3xl font-bold text-deepsepia mb-2"></h2>
+                    <p id="chapter-description" class="text-sepia italic"></p>
+                </div>
+                
+                <!-- Ornamental divider -->
+                <div class="flex justify-center my-10">
+                    <div class="w-32 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent mx-2"></div>
+                    <div class="w-2 h-2 bg-gold/70 rounded-full mx-1 transform rotate-45"></div>
+                    <div class="w-3 h-3 bg-gold/80 rounded-full mx-1"></div>
+                    <div class="w-2 h-2 bg-gold/70 rounded-full mx-1 transform -rotate-45"></div>
+                    <div class="w-32 h-px bg-gradient-to-l from-transparent via-gold/60 to-transparent mx-2"></div>
+                </div>
+                
+                <!-- Letter Content -->
+                <main id="letter-content" class="relative z-10 leading-relaxed">
+                    <!-- Content will be populated by JavaScript -->
+                    <div class="text-center text-gold/30 italic my-8">Loading content...</div>
+                </main>
+                
+                <!-- Closing ornament -->
+                <div class="flex justify-center my-10">
+                    <div class="w-32 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent mx-2"></div>
+                    <div class="w-2 h-2 bg-gold/70 rounded-full mx-1 transform rotate-45"></div>
+                    <div class="w-3 h-3 bg-gold/80 rounded-full mx-1"></div>
+                    <div class="w-2 h-2 bg-gold/70 rounded-full mx-1 transform -rotate-45"></div>
+                    <div class="w-32 h-px bg-gradient-to-l from-transparent via-gold/60 to-transparent mx-2"></div>
+                </div>
+                
+                <!-- Signature area -->
+                <div class="text-center mt-16 mb-6">
+                    <div class="mb-6">
+                        <div class="inline-block w-48 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent"></div>
+                    </div>
+                    <div class="signature font-display text-4xl text-deepsepia italic transform -rotate-1">In Faith and Fellowship</div>
+                    <div class="mt-4 text-gold/70">
+                        <i class="fas fa-feather-alt mx-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Daily Verse Page -->
+        <div id="daily-verse-page" class="page">
+            <div class="w-full max-w-4xl mx-auto my-12 p-6">
+                <h2 class="font-display text-5xl font-bold text-deepsepia mb-8 text-center tracking-wide">Daily Verse</h2>
+                
+                <div class="daily-verse-container bg-parchment rounded-xl p-10 shadow-page border border-gold/10 relative overflow-hidden">
+                    <!-- Decorative elements -->
+                    <div class="absolute top-6 right-6 text-8xl text-gold/10 leading-none">
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="absolute -bottom-4 -left-4 text-9xl text-gold/5 leading-none">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <div class="mb-8 text-center">
+                            <i class="fas fa-scroll text-gold/60 text-2xl"></i>
+                        </div>
+                        <p id="verse-of-the-day" class="daily-verse-text text-xl md:text-2xl text-deepsepia leading-relaxed font-medium mb-6"></p>
+                        <p id="verse-reference" class="daily-verse-reference text-right text-gold italic font-medium"></p>
+                        
+                        <div class="mt-8 text-center">
+                            <div id="verse-countdown" class="bg-cream/50 rounded-lg p-4 inline-block shadow-sm border border-gold/10 mb-6">
+                                <p class="text-sm text-sepia mb-2">Next verse in:</p>
+                                <div class="flex justify-center space-x-4 text-deepsepia font-medium">
+                                    <div class="text-center">
+                                        <span id="countdown-hours" class="text-xl">24</span>
+                                        <p class="text-xs text-sepia/70">hours</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <span id="countdown-minutes" class="text-xl">00</span>
+                                        <p class="text-xs text-sepia/70">minutes</p>
+                                    </div>
+                                    <div class="text-center">
+                                        <span id="countdown-seconds" class="text-xl">00</span>
+                                        <p class="text-xs text-sepia/70">seconds</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button id="refresh-verse" class="bg-cream hover:bg-gold/20 text-deepsepia px-6 py-3 rounded-lg transition-colors shadow-elegant flex items-center font-medium mx-auto">
+                                <i class="fas fa-sync-alt mr-3 text-gold/70"></i> New Verse
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8 text-sepia/70 text-sm">
+                    <p>A new verse appears every 24 hours to inspire and guide you on your spiritual journey.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Author Note Page -->
+        <div id="author-note-page" class="page">
+            <div class="w-full max-w-4xl mx-auto my-12 p-6">
+                <h2 class="font-display text-5xl font-bold text-deepsepia mb-8 text-center tracking-wide">Note from the Author</h2>
+                
+                <div class="bg-parchment rounded-xl p-10 border border-gold/10 shadow-page relative overflow-hidden">
+                    <!-- Decorative elements -->
+                    <div class="absolute top-0 right-0 w-32 h-32 border-t-2 border-r-2 border-gold/20 rounded-tr-xl"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 border-b-2 border-l-2 border-gold/20 rounded-bl-xl"></div>
+                    
+                    <div class="relative z-10">
+                        <h3 class="text-2xl mb-6 font-display text-deepsepia">Temptations - the easy way out</h3>
+                        
+                        <div class="prose prose-lg text-sepia max-w-none">
+                            <p class="mb-4">Temptations are the voices in our head saying "There are easy ways for you to feel happy", "You can escape reality by doing something you love doing, isn't that great?" (Speaking about spiritual temptations, being tempted to eat a candy might not be that bad unless it's gluttony)</p>
+                            
+                            <p class="mb-4">Lies of the enemy. When you're tempted by the enemy, he offers you easy ways out, ways to make you happy, to make you forget about your sadness, bad situation, or stress.</p>
+                            
+                            <div class="bg-cream/50 p-5 rounded-lg my-6 border-l-4 border-gold">
+                                <p class="font-medium">We are mostly tempted when we are vulnerable:</p>
+                                <ul class="list-disc pl-6 mt-2 space-y-1">
+                                    <li>We had a bad day at school or work</li>
+                                    <li>We had a bad interaction with family or friends</li>
+                                    <li>We got mad at ourselves</li>
+                                    <li>We started overthinking about all the worse things that happened or might happen</li>
+                                </ul>
+                            </div>
+                            
+                            <p class="mb-4">Falling into temptation feels good for the moment, your stress goes away, you feel happy for a bit, but after you fall into it and you realize what you've done - the stress goes away... and guilt appears.</p>
+                            
+                            <p class="mb-4">What is worse than stress? Stress is mostly directed to the future or present. Guilt is directed to the past - you cannot change the past.</p>
+                            
+                            <p class="mb-4">So after you fall into temptation, after you fall, you're filled with guilt:</p>
+                            <ul class="list-disc pl-6 mb-4 space-y-1">
+                                <li>"I told God I wouldn't do it, yet I still did it."</li>
+                                <li>"I've done this sin so much already"</li>
+                                <li>"Why can I never flee this sin"</li>
+                            </ul>
+                            
+                            <div class="flex my-6">
+                                <div class="w-1/2 pr-3 border-r border-gold/20">
+                                    <h4 class="text-lg font-medium text-gold mb-2">On the bright side</h4>
+                                    <p>It's good that you feel guilt, it means you seek to actually stop sinning.</p>
+                                </div>
+                                <div class="w-1/2 pl-3">
+                                    <h4 class="text-lg font-medium text-deepsepia mb-2">On the darker side</h4>
+                                    <p>Too much guilt destroys you, thinking about how stupid you are and how foolish for falling into temptation for the millionth time won't help you.</p>
+                                </div>
+                            </div>
+                            
+                            <p class="mb-4">Pray and ask for forgiveness, reflect on your actions, understand your triggers, understand your bad choices and find solutions for your temptation problem.</p>
+                            
+                            <div class="bg-gold/10 p-5 rounded-lg my-6">
+                                <h4 class="text-xl font-medium text-deepsepia mb-3">How to Fight Temptation</h4>
+                                <p class="mb-3">One of the best ways to fight temptation is not to fight it directly, but to flee from it, to run from it.</p>
+                                <p>Spiritually run from it, and not just spiritually, literally physically run away from it - You are feeling tempted, run away from the place you are and go in a place where there's more people or just go wash your face, pray to God, don't let yourself near the place where you were tempted.</p>
+                            </div>
+                            
+                            <p class="mb-4">When you are tempted, you sometimes just flirt with it, you flirt with sin, and you don't fully realize what you are doing, the enemy tries to blind you so that you are vulnerable and not aware.</p>
+                            
+                            <p class="mb-4">You need to realize what's happening, you need to be aware of your thoughts and actions - When you get tempted, say your thoughts out loud: <span class="font-medium">"I want to sin"</span>.</p>
+                            
+                            <p class="mb-4">Now you've acknowledged the temptation, after telling yourself what you want to do, tell God, and ask him for help so that you may not do that.</p>
+                            
+                            <h4 class="text-xl font-medium text-deepsepia mt-8 mb-4">My Personal Experience</h4>
+                            
+                            <p class="mb-4">In my own experience, I've always fallen into temptation when I either was numb - I filled myself with distractions, I ran away from every emotion and I was just on autopilot, so when I was tempted, I just fell into it because I didn't have any emotion, I just searched for easy pleasure and happiness.</p>
+                            
+                            <p class="mb-4">I also fell when I started flirting with the sin - the more you let it stay in your mind, the more it grows, from 1 single evil spirit, 7 appear, 10, 50, 100, as many needed to make you fall - you need to act fast: Acknowledge the sin - say it out loud - say it to God.</p>
+                            
+                            <p class="mb-4">I also fell when I had TOO many feelings in my head, mostly bad feelings, like worry, stress, sadness - I was so sad that temptation sounded good, it sounded like a moment of happiness, it sounded like escape from reality, that's exactly what I needed when feeling stressed, but the truth is that after you sin the stress is still there, the sadness, and now there's even guilt too.</p>
+                            
+                            <div class="bg-cream/70 p-5 rounded-lg my-6 border border-gold/20">
+                                <p class="italic text-deepsepia mb-3">"When the unclean spirit has gone out of a person, it passes through waterless places seeking rest, but finds none. Then it says, 'I will return to my house from which I came.' And when it comes, it finds the house empty, swept, and put in order. Then it goes and brings with it seven other spirits more evil than itself, and they enter and dwell there, and the last state of that person is worse than the first."</p>
+                                <p class="text-right text-gold">Matthew 12:43-45</p>
+                            </div>
+                            
+                            <p class="mb-4">The temptation is not gone yet, it will always come back even more strong. And if you just think you've won, you will forget about it and you will be vulnerable again. But you need to be extremely careful, for the enemy is like a roaring lion waiting to strike you.</p>
+                            
+                            <p class="mb-4">Never forget about the times when you were tempted, pray to God for protection and STAY AWARE.</p>
+                            
+                            <div class="border-t border-b border-gold/20 py-6 my-8">
+                                <h4 class="text-xl font-medium text-deepsepia mb-4">A Recent Example</h4>
+                                <p class="mb-4">Today I was tempted too, I realized that, I acknowledged the temptation, why did I get tempted? I had a pretty bad day, I was stressing, worrying and I felt disappointed.</p>
+                                
+                                <p class="mb-4">Getting some easy happiness sounded good, but instead of giving up those emotions of stress, worry, disappointment, I ABSORBED THEM, I acknowledged them too, I realized that I'm a human, it's okay for me to make mistakes, it's okay for me to worry about certain things.</p>
+                                
+                                <p class="mb-4">So I stayed with those emotions, but I also tried to think positively, so that those feelings won't always be that bad, and I also didn't try to run from those emotions by falling into temptation.</p>
+                                
+                                <p class="mb-4">I went to sleep, I took a nap so I don't think or flirt with the temptations.</p>
+                            </div>
+                            
+                            <p class="mb-4">Choosing nap instead of sin? It might look small, but biblically, that's resisting the devil (James 4:7). And what does the verse say next?</p>
+                            
+                            <p class="text-center text-xl font-medium text-gold my-6">"Resist the devil, and he will flee from you"</p>
+                            
+                            <p class="mb-4">You're not the one who has to flee forever. When you resist enough, he flees.</p>
+                            
+                            <p class="mb-4">Each time you don't run from your emotions, each time you don't flirt with sin, each time you acknowledge your thoughts and you give them onto God - even doing it halfway, the temptation loses a bit of its grip.</p>
+                        </div>
+                        
+                        <div class="flex justify-center my-8">
+                            <div class="w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent"></div>
+                        </div>
+                        
+                        <p class="text-right italic mt-8">"Resist the devil, and he will flee from you",</p>
+                        <p class="text-right font-display text-3xl mt-3 text-deepsepia transform -rotate-1">James 4:7</p>
+                        <div class="w-20 h-px bg-gradient-to-l from-gold/40 to-transparent mt-2 ml-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-page" class="page">
+            <div class="w-full max-w-4xl mx-auto my-12 p-6">
+                <h2 class="font-display text-5xl font-bold text-deepsepia mb-8 text-center tracking-wide">Settings</h2>
+                
+                <div class="settings-panel bg-parchment rounded-xl p-10 border border-gold/10 shadow-page relative overflow-hidden">
+                    <!-- Decorative elements -->
+                    <div class="absolute top-0 right-0 w-32 h-32 border-t-2 border-r-2 border-gold/20 rounded-tr-xl"></div>
+                    <div class="absolute bottom-0 left-0 w-32 h-32 border-b-2 border-l-2 border-gold/20 rounded-bl-xl"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="settings-group mb-10">
+                            <h3 class="text-2xl font-display text-deepsepia mb-4 flex items-center">
+                                <i class="fas fa-text-height mr-3 text-gold/70"></i> Font Size
+                            </h3>
+                            <div class="mt-4 flex flex-wrap gap-3">
+                                <button class="font-size-btn px-6 py-3 rounded-lg bg-cream hover:bg-gold/20 transition-colors shadow-sm" data-size="small">Small</button>
+                                <button class="font-size-btn active px-6 py-3 rounded-lg bg-gold/20 hover:bg-gold/30 transition-colors shadow-sm" data-size="medium">Medium</button>
+                                <button class="font-size-btn px-6 py-3 rounded-lg bg-cream hover:bg-gold/20 transition-colors shadow-sm" data-size="large">Large</button>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-center my-8">
+                            <div class="w-48 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent"></div>
+                        </div>
+                        
+                        <div class="settings-group mt-10">
+                            <h3 class="text-2xl font-display text-deepsepia mb-4 flex items-center">
+                                <i class="fas fa-font mr-3 text-gold/70"></i> Font Family
+                            </h3>
+                            <div class="mt-4 relative">
+                                <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gold/60">
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <select id="font-selector" class="w-full p-4 bg-cream border border-gold/20 rounded-lg text-sepia appearance-none pr-10 font-medium shadow-sm focus:ring-1 focus:ring-gold/30 focus:outline-none">
+                                    <option value="'EB Garamond', serif">EB Garamond</option>
+                                    <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+                                    <option value="'Playfair Display', serif">Playfair Display</option>
+                                    <option value="'Georgia', serif">Georgia</option>
+                                    <option value="'Times New Roman', serif">Times New Roman</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12 text-center">
+                            <p class="text-sm text-sepia/70 italic">Your settings will be automatically saved for your next visit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="mt-16 text-center pb-12 pt-8 relative overflow-hidden">
+            <!-- Decorative background elements -->
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-cream/30 z-0"></div>
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent"></div>
+            
+            <!-- Decorative corner ornaments -->
+            <div class="absolute top-8 left-8 w-16 h-16">
+                <div class="w-full h-full border-t-2 border-l-2 border-gold/20 rounded-tl-3xl"></div>
+                <div class="absolute top-2 left-2 w-3 h-3 bg-gold/10 rounded-full"></div>
+            </div>
+            <div class="absolute top-8 right-8 w-16 h-16">
+                <div class="w-full h-full border-t-2 border-r-2 border-gold/20 rounded-tr-3xl"></div>
+                <div class="absolute top-2 right-2 w-3 h-3 bg-gold/10 rounded-full"></div>
+            </div>
+            
+            <!-- Title with illuminated first letter effect -->
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <div class="font-display text-4xl text-deepsepia tracking-wide relative inline-block">
+                  
+                    <span class="relative z-10">The Companions Letter</span>
+                    <div class="absolute -top-2 -left-2 w-12 h-12 bg-gold/10 rounded-full blur-sm z-0"></div>
+                </div>
+                
+                <!-- Decorative flourish -->
+                <div class="mt-4 flex justify-center items-center">
+                    <div class="w-24 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent"></div>
+                    <div class="mx-3 text-gold/60 transform rotate-45"><i class="fas fa-feather-alt"></i></div>
+                    <div class="w-24 h-px bg-gradient-to-l from-transparent via-gold/40 to-transparent"></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Reminder Bookmark -->
+    <div id="reminder-bookmark" class="rounded-xl shadow-page bg-cream border border-gold/20">
+        <div class="flex justify-between items-center mb-3 border-b border-gold/10 pb-3">
+            <h3 class="font-bold text-deepsepia flex items-center">
+                <i class="fas fa-bookmark text-gold/70 mr-2"></i> Bookmark Your Progress
+            </h3>
+            <button id="dismiss-reminder" class="text-sepia hover:text-gold transition-colors bg-parchment hover:bg-cream rounded-full w-6 h-6 flex items-center justify-center">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+        </div>
+        <p class="text-sm">Don't forget to bookmark this page to continue your reading later.</p>
+        <div class="mt-4 pt-3 border-t border-gold/10 flex justify-end">
+            <button class="text-xs bg-gold/20 hover:bg-gold/30 text-deepsepia px-3 py-1 rounded transition-colors">
+                <i class="fas fa-check mr-1"></i> Got it
+            </button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
