@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghid Complet C++ — Subprograme</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --bg2: #13161e;
+    --bg3: #1a1e2a;
+    --card: #1e2333;
+    --border: #2a3048;
+    --green: #4ade80;
+    --green2: #22c55e;
+    --blue: #60a5fa;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --purple: #c084fc;
+    --text: #e2e8f0;
+    --muted: #7c8aa0;
+    --code-bg: #0a0c10;
+    --accent: #4ade80;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,15,20,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex; align-items: center; gap: 0; height: 56px;
+    overflow-x: auto;
+  }
+  .nav-brand {
+    font-weight: 800; font-size: 1rem;
+    color: var(--green);
+    white-space: nowrap; margin-right: 1.5rem;
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 0.2rem; flex-shrink: 0; }
+  .nav-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-family: 'Syne', sans-serif;
+    font-size: 0.78rem; font-weight: 600;
+    padding: 0.4rem 0.75rem; border-radius: 6px;
+    white-space: nowrap; transition: all 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .nav-btn:hover { background: var(--bg3); color: var(--text); }
+  .nav-btn.active { background: var(--green); color: #000; }
+
+  /* SECTIONS */
+  .section { display: none; padding: 76px 0 3rem; min-height: 100vh; }
+  .section.active { display: block; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #0d0f14 0%, #13161e 50%, #0f1a0f 100%);
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+    line-height: 1.1; letter-spacing: -2px;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+  .hero p { color: var(--muted); font-size: 1.05rem; max-width: 600px; margin: 0 auto 2rem; }
+  .topic-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem; margin-top: 2rem;
+  }
+  .topic-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+    cursor: pointer; transition: all 0.2s; text-align: left;
+  }
+  .topic-card:hover { border-color: var(--green); transform: translateY(-2px); }
+  .topic-card .num { font-family: 'JetBrains Mono', monospace; color: var(--green); font-size: 0.8rem; margin-bottom: 0.4rem; }
+  .topic-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+
+  /* CONTENT STYLES */
+  .page-header {
+    padding: 2.5rem 0 1.5rem;
+    border-bottom: 1px solid var(--border); margin-bottom: 2.5rem;
+  }
+  .page-header .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; color: var(--green);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem;
+    display: block;
+  }
+  .page-header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; }
+
+  h2 {
+    font-size: 1.4rem; font-weight: 700; letter-spacing: -0.5px;
+    color: var(--green); margin: 2.5rem 0 1rem;
+    padding-left: 1rem; border-left: 3px solid var(--green);
+  }
+  h3 { font-size: 1.1rem; font-weight: 700; color: var(--blue); margin: 1.5rem 0 0.6rem; }
+  h4 { font-size: 0.95rem; font-weight: 700; color: var(--yellow); margin: 1rem 0 0.4rem; }
+
+  p { color: var(--text); margin-bottom: 0.9rem; font-size: 0.95rem; }
+
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .card-green { border-color: var(--green); background: rgba(74,222,128,0.05); }
+  .card-blue  { border-color: var(--blue);  background: rgba(96,165,250,0.05); }
+  .card-yellow{ border-color: var(--yellow); background: rgba(251,191,36,0.05); }
+  .card-red   { border-color: var(--red);    background: rgba(248,113,113,0.05); }
+  .card-purple{ border-color: var(--purple); background: rgba(192,132,252,0.05); }
+
+  .tip-label {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 0.5rem; display: block;
+  }
+  .tip-green  .tip-label { color: var(--green); }
+  .tip-blue   .tip-label { color: var(--blue); }
+  .tip-yellow .tip-label { color: var(--yellow); }
+  .tip-red    .tip-label { color: var(--red); }
+  .tip-purple .tip-label { color: var(--purple); }
+
+  /* CODE BLOCKS */
+  .code-block {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin: 1rem 0 1.5rem;
+  }
+  .code-header {
+    background: var(--bg3); padding: 0.5rem 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .code-title { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+  pre {
+    padding: 1.25rem 1.5rem; overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.82rem; line-height: 1.8;
+  }
+  .kw  { color: #c084fc; } /* keywords */
+  .tp  { color: #60a5fa; } /* types */
+  .fn  { color: #4ade80; } /* function names */
+  .cm  { color: #4a5568; font-style: italic; } /* comments */
+  .st  { color: #fbbf24; } /* strings */
+  .nm  { color: #f97316; } /* numbers */
+  .op  { color: #e2e8f0; } /* operators */
+
+  /* EXPLAINED CODE */
+  .explained-code {
+    background: var(--code-bg); border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; margin: 1rem 0 1.5rem;
+  }
+  .code-line {
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: start; gap: 0; border-bottom: 1px solid rgba(42,48,72,0.4);
+    transition: background 0.15s;
+  }
+  .code-line:last-child { border-bottom: none; }
+  .code-line:hover { background: rgba(74,222,128,0.04); }
+  .line-num {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+    color: #2a3048; padding: 0.4rem 0.75rem; user-select: none;
+    min-width: 2.5rem; text-align: right;
+  }
+  .line-code {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+    padding: 0.4rem 0.75rem; white-space: pre;
+  }
+  .line-explain {
+    font-size: 0.76rem; color: var(--green);
+    padding: 0.4rem 1rem; font-style: italic;
+    border-left: 1px solid var(--border);
+    min-width: 220px; max-width: 280px;
+  }
+
+  /* LISTS */
+  ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+  li { margin-bottom: 0.4rem; font-size: 0.95rem; color: var(--text); }
+  ul li::marker { color: var(--green); }
+
+  /* COMPARISON TABLE */
+  table {
+    width: 100%; border-collapse: collapse; margin: 1rem 0 1.5rem;
+    font-size: 0.88rem; border-radius: 10px; overflow: hidden;
+  }
+  th {
+    background: var(--bg3); padding: 0.75rem 1rem;
+    text-align: left; font-weight: 700;
+    border-bottom: 2px solid var(--border); color: var(--green);
+  }
+  td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: rgba(30,35,51,0.4); }
+  td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--blue); }
+
+  /* EXERCISE */
+  .exercise {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden; margin-bottom: 2rem;
+  }
+  .exercise-header {
+    background: var(--bg3); padding: 1rem 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .ex-num { font-family: 'JetBrains Mono', monospace; color: var(--green); font-weight: 700; font-size: 0.85rem; }
+  .ex-title { font-weight: 700; font-size: 1rem; }
+  .exercise-body { padding: 1.5rem; }
+  .steps { counter-reset: step; }
+  .step { counter-increment: step; margin-bottom: 1.2rem; padding-left: 2.5rem; position: relative; }
+  .step::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 0;
+    width: 1.8rem; height: 1.8rem;
+    background: var(--green); color: #000;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.75rem; font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* CHEAT SHEET */
+  .cheat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem; margin-bottom: 1.5rem;
+  }
+  .cheat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1.25rem;
+  }
+  .cheat-card h4 {
+    color: var(--green); font-size: 0.85rem; margin-bottom: 0.75rem;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .cheat-card code {
+    display: block; font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem; color: var(--blue);
+    background: var(--code-bg); padding: 0.4rem 0.6rem;
+    border-radius: 5px; margin-bottom: 0.3rem;
+  }
+  .cheat-card p { font-size: 0.82rem; color: var(--muted); margin: 0.2rem 0; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; padding: 0.2rem 0.6rem;
+    border-radius: 20px; font-size: 0.72rem; font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .badge-green { background: rgba(74,222,128,0.15); color: var(--green); }
+  .badge-red   { background: rgba(248,113,113,0.15); color: var(--red); }
+  .badge-blue  { background: rgba(96,165,250,0.15); color: var(--blue); }
+  .badge-yellow{ background: rgba(251,191,36,0.15); color: var(--yellow); }
+
+  /* DIVIDER */
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  /* INLINE CODE */
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: 0.82em;
+    background: var(--bg3); padding: 0.15rem 0.4rem; border-radius: 4px;
+    color: var(--blue); border: 1px solid var(--border);
+  }
+
+  /* SCROLL */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+
+  /* NOTE BOX */
+  .note {
+    border-left: 3px solid; padding: 0.75rem 1rem; border-radius: 0 8px 8px 0;
+    margin: 1rem 0; font-size: 0.9rem;
+  }
+  .note-green { border-color: var(--green); background: rgba(74,222,128,0.07); }
+  .note-yellow{ border-color: var(--yellow); background: rgba(251,191,36,0.07); }
+  .note-red   { border-color: var(--red); background: rgba(248,113,113,0.07); }
+  .note-blue  { border-color: var(--blue); background: rgba(96,165,250,0.07); }
+
+  /* SYNTAX BOX */
+  .syntax-box {
+    background: var(--code-bg); border: 2px dashed var(--green);
+    border-radius: 10px; padding: 1.25rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.83rem;
+    line-height: 2; margin: 1rem 0;
+  }
+  .syntax-ph { color: var(--yellow); font-style: italic; }
+
+  @media(max-width: 700px) {
+    .code-line { grid-template-columns: auto 1fr; }
+    .line-explain { display: none; }
+    .line-explain.show { display: block; grid-column: 1/-1; border-left: none; border-top: 1px solid var(--border); }
+    table { font-size: 0.78rem; }
+    th, td { padding: 0.5rem 0.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <span class="nav-brand">⌨ C++ Ghid</span>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showSection('home')">🏠 Acasă</button>
+    <button class="nav-btn" onclick="showSection('tema5')">T5: Subprograme</button>
+    <button class="nav-btn" onclick="showSection('tema6')">T6: Vizibilitate</button>
+    <button class="nav-btn" onclick="showSection('tema7')">T7: Tablouri</button>
+    <button class="nav-btn" onclick="showSection('tema8')">T8: Recursiv</button>
+    <button class="nav-btn" onclick="showSection('exercitii')">✏ Exerciții</button>
+    <button class="nav-btn" onclick="showSection('cheatsheet')">📋 Cheat Sheet</button>
+    <button class="nav-btn" onclick="showSection('special')">⭐ Focus Special</button>
+  </div>
+</nav>
+
+<!-- ================================================================ -->
+<!-- HOME -->
+<!-- ================================================================ -->
+<section id="home" class="section active">
+  <div class="hero">
+    <div class="container">
+      <h1>Ghid Complet C++<br>Subprograme</h1>
+      <p>Tot ce trebuie să știi pentru test — explicații simple, exemple clare, cod comentat linie cu linie.</p>
+      <div class="topic-grid">
+        <div class="topic-card" onclick="showSection('tema5')">
+          <div class="num">TEMA 5</div>
+          <h3>Subprograme cu tip și fără tip</h3>
+        </div>
+        <div class="topic-card" onclick="showSection('tema6')">
+          <div class="num">TEMA 6</div>
+          <h3>Domenii de vizibilitate &amp; Efecte colaterale</h3>
+        </div>
+        <div class="topic-card" onclick="showSection('tema7')">
+          <div class="num">TEMA 7</div>
+          <h3>Parametri de tip tablou (arrays)</h3>
+        </div>
+        <div class="topic-card" onclick="showSection('tema8')">
+          <div class="num">TEMA 8</div>
+          <h3>Subprograme recursive</h3>
+        </div>
+        <div class="topic-card" onclick="showSection('exercitii')">
+          <div class="num">EXERCIȚII</div>
+          <h3>Probleme rezolvate pas cu pas</h3>
+        </div>
+        <div class="topic-card" onclick="showSection('cheatsheet')">
+          <div class="num">CHEAT SHEET</div>
+          <h3>Rezumat rapid al tuturor conceptelor</h3>
+        </div>
+        <div class="topic-card" onclick="showSection('special')">
+          <div class="num">⭐ FOCUS</div>
+          <h3>Funcții, tablouri, șiruri — aprofundat</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>Ce sunt subprogramele?</h2>
+    <div class="card card-green">
+      <span class="tip-label tip-green" style="color:var(--green)">DEFINIȚIE SIMPLĂ</span>
+      <p>Un <strong>subprogram</strong> (sau funcție) este un bloc de cod căruia îi dai un <strong>nume</strong> și pe care îl poți <strong>apela (folosi) de oricâte ori</strong> în program, fără să rescrii același cod.</p>
+    </div>
+    <p>Gândești-te la o funcție ca la o rețetă: o scrii o dată, o numești, și o "gătești" (apelezi) de câte ori ai nevoie.</p>
+    <h2>De ce folosim subprograme?</h2>
+    <ul>
+      <li>🔁 <strong>Reutilizare</strong> — scriem codul o dată, îl folosim de mai multe ori</li>
+      <li>🧩 <strong>Organizare</strong> — programul e mai ușor de citit și înțeles</li>
+      <li>🐛 <strong>Depanare</strong> — găsim erorile mai ușor</li>
+      <li>📦 <strong>Modularizare</strong> — descompunem problema în bucăți mici</li>
+    </ul>
+    <h2>Structura unui program C++ cu funcții</h2>
+    <div class="code-block">
+      <div class="code-header">
+        <div class="code-dot" style="background:#f87171"></div>
+        <div class="code-dot" style="background:#fbbf24"></div>
+        <div class="code-dot" style="background:#4ade80"></div>
+        <span class="code-title">structura_generala.cpp</span>
+      </div>
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// 1. Definim functia INAINTE de main()</span>
+<span class="tp">int</span> <span class="fn">suma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">return</span> a + b;
+}
+
+<span class="cm">// 2. Programul principal</span>
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> rezultat = <span class="fn">suma</span>(<span class="nm">3</span>, <span class="nm">5</span>); <span class="cm">// 3. Apelam functia</span>
+    cout &lt;&lt; rezultat &lt;&lt; endl;   <span class="cm">// Afiseaza: 8</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+    <div class="note note-green">
+      <strong>Rezumat rapid:</strong> Funcția e definită înainte de <code>main()</code>, iar în <code>main()</code> o apelăm folosind numele ei.
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- TEMA 5: SUBPROGRAME CU TIP SI FARA TIP -->
+<!-- ================================================================ -->
+<section id="tema5" class="section">
+  <div class="container">
+    <div class="page-header">
+      <span class="tag">Tema 5</span>
+      <h1>Subprograme cu tip și fără tip</h1>
+    </div>
+
+    <h2>1. Cele două tipuri de funcții</h2>
+    <table>
+      <tr>
+        <th>Caracteristică</th>
+        <th>Cu tip (returnează valoare)</th>
+        <th>Fără tip — void</th>
+      </tr>
+      <tr>
+        <td>Sintaxă antet</td>
+        <td><code>int/float/... numeF(...)</code></td>
+        <td><code>void numeF(...)</code></td>
+      </tr>
+      <tr>
+        <td>Returnează ceva?</td>
+        <td>✅ Da — folosim <code>return</code></td>
+        <td>❌ Nu returnează valoare</td>
+      </tr>
+      <tr>
+        <td>Cum se apelează</td>
+        <td><code>x = numeF(...);</code> sau în expresii</td>
+        <td><code>numeF(...);</code> — linie separată</td>
+      </tr>
+      <tr>
+        <td>Când o folosim</td>
+        <td>Când avem nevoie de un rezultat calculat</td>
+        <td>Când facem afișare, citire, modificări</td>
+      </tr>
+    </table>
+
+    <h2>2. Funcție CU tip — sintaxă completă</h2>
+    <div class="syntax-box">
+      <span class="kw">tip_returnat</span> <span class="fn">nume_functie</span>(<span class="syntax-ph">tip param1, tip param2, ...</span>) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-ph">// variabile locale si calcule</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="syntax-ph">rezultat</span>;<br>
+      }
+    </div>
+    <p>Fiecare parte a acestei sintaxe are un rol:</p>
+    <ul>
+      <li><strong>tip_returnat</strong> — ce tip de valoare întoarce funcția: <code>int</code>, <code>float</code>, <code>double</code>, <code>char</code>, <code>bool</code></li>
+      <li><strong>nume_functie</strong> — numele cu care o apelăm (ex: <code>suma</code>, <code>maxim</code>, <code>cmmdc</code>)</li>
+      <li><strong>parametri</strong> — datele de intrare (pot lipsi)</li>
+      <li><strong>return</strong> — trimite rezultatul înapoi la apelant</li>
+    </ul>
+
+    <h3>Exemplu 1: Maximul a două numere</h3>
+    <div class="explained-code">
+      <div class="code-header" style="background:var(--bg3);padding:0.5rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem;">
+        <div class="code-dot" style="background:#f87171"></div>
+        <div class="code-dot" style="background:#fbbf24"></div>
+        <div class="code-dot" style="background:#4ade80"></div>
+        <span class="code-title">maxim.cpp</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">1</span>
+        <span class="line-code"><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span></span>
+        <span class="line-explain">Include biblioteca de intrare/ieșire</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">2</span>
+        <span class="line-code"><span class="kw">using namespace</span> std;</span>
+        <span class="line-explain">Folosim spațiul de nume standard</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">3</span>
+        <span class="line-code"></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">4</span>
+        <span class="line-code"><span class="tp">int</span> <span class="fn">maxim</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {</span>
+        <span class="line-explain">Funcție care returnează int, primește 2 int-uri</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">5</span>
+        <span class="line-code">    <span class="kw">if</span> (a &gt; b)</span>
+        <span class="line-explain">Verificăm dacă a este mai mare</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">6</span>
+        <span class="line-code">        <span class="kw">return</span> a;</span>
+        <span class="line-explain">Dacă da, returnăm a</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">7</span>
+        <span class="line-code">    <span class="kw">else</span></span>
+        <span class="line-explain">Altfel...</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">8</span>
+        <span class="line-code">        <span class="kw">return</span> b;</span>
+        <span class="line-explain">...returnăm b (b este mai mare sau egal)</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">9</span>
+        <span class="line-code">}</span>
+        <span class="line-explain">Sfârșitul funcției maxim</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">10</span>
+        <span class="line-code"></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">11</span>
+        <span class="line-code"><span class="tp">int</span> <span class="fn">main</span>() {</span>
+        <span class="line-explain">Funcția principală a programului</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">12</span>
+        <span class="line-code">    <span class="tp">int</span> x, y;</span>
+        <span class="line-explain">Declarăm variabilele locale</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">13</span>
+        <span class="line-code">    cout &lt;&lt; <span class="st">"Dati 2 numere: "</span>; cin &gt;&gt; x &gt;&gt; y;</span>
+        <span class="line-explain">Citim cele două numere</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">14</span>
+        <span class="line-code">    cout &lt;&lt; <span class="st">"Maxim: "</span> &lt;&lt; <span class="fn">maxim</span>(x, y);</span>
+        <span class="line-explain">Apelăm funcția maxim cu x și y</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">15</span>
+        <span class="line-code">    <span class="kw">return</span> <span class="nm">0</span>;</span>
+        <span class="line-explain">Program terminat cu succes</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">16</span>
+        <span class="line-code">}</span>
+        <span class="line-explain">Sfârșitul funcției main</span>
+      </div>
+    </div>
+
+    <h2>3. Funcție FĂRĂ tip (void) — sintaxă</h2>
+    <div class="syntax-box">
+      <span class="kw">void</span> <span class="fn">nume_functie</span>(<span class="syntax-ph">tip param1, tip param2, ...</span>) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-ph">// instructiuni — afisare, citire, modificari</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Nu avem return cu valoare!</span><br>
+      }
+    </div>
+
+    <h3>Exemplu 2: Funcție void care afișează un triunghi de stele</h3>
+    <div class="explained-code">
+      <div class="code-header" style="background:var(--bg3);padding:0.5rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem;">
+        <div class="code-dot" style="background:#f87171"></div>
+        <div class="code-dot" style="background:#fbbf24"></div>
+        <div class="code-dot" style="background:#4ade80"></div>
+        <span class="code-title">triunghi.cpp</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">1</span>
+        <span class="line-code"><span class="kw">void</span> <span class="fn">triunghi</span>(<span class="tp">int</span> n) {</span>
+        <span class="line-explain">void = nu returnează nimic; n = înălțimea</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">2</span>
+        <span class="line-code">    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">1</span>; i &lt;= n; i++) {</span>
+        <span class="line-explain">Bucla pe fiecare linie (1, 2, ..., n)</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">3</span>
+        <span class="line-code">        <span class="kw">for</span> (<span class="tp">int</span> j = <span class="nm">1</span>; j &lt;= i; j++)</span>
+        <span class="line-explain">Pe linia i, afișăm i stele</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">4</span>
+        <span class="line-code">            cout &lt;&lt; <span class="st">"*"</span>;</span>
+        <span class="line-explain">Afișăm o stea</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">5</span>
+        <span class="line-code">        cout &lt;&lt; endl;</span>
+        <span class="line-explain">Trecem la linia următoare</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">6</span>
+        <span class="line-code">    }</span>
+        <span class="line-explain">Sfârșitul buclei exterioare</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">7</span>
+        <span class="line-code">}</span>
+        <span class="line-explain">Fără return — funcție void</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">8</span>
+        <span class="line-code"><span class="tp">int</span> <span class="fn">main</span>() {</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">9</span>
+        <span class="line-code">    <span class="fn">triunghi</span>(<span class="nm">4</span>); <span class="cm">// apelam</span></span>
+        <span class="line-explain">Apelăm — va afișa triunghi cu 4 linii</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">10</span>
+        <span class="line-code">    <span class="kw">return</span> <span class="nm">0</span>;</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">11</span>
+        <span class="line-code">}</span>
+        <span class="line-explain">Rezultat: * / ** / *** / ****</span>
+      </div>
+    </div>
+
+    <h2>4. Parametri formali vs Parametri actuali</h2>
+    <div class="card card-blue">
+      <span class="tip-label tip-blue">DIFERENȚA ESENȚIALĂ</span>
+      <p><strong>Parametri formali</strong> = variabilele din antetul funcției (placeholdere)</p>
+      <p><strong>Parametri actuali</strong> = valorile reale pe care le trimitem la apel</p>
+    </div>
+    <div class="code-block">
+      <pre><span class="cm">// a si b sunt PARAMETRI FORMALI (placeholdere)</span>
+<span class="tp">int</span> <span class="fn">suma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">return</span> a + b;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> x = <span class="nm">5</span>, y = <span class="nm">3</span>;
+    <span class="cm">// x si y sunt PARAMETRI ACTUALI (valorile reale)</span>
+    cout &lt;&lt; <span class="fn">suma</span>(x, y);    <span class="cm">// a=5, b=3 → returnează 8</span>
+    cout &lt;&lt; <span class="fn">suma</span>(<span class="nm">10</span>, <span class="nm">20</span>); <span class="cm">// a=10, b=20 → returnează 30</span>
+}</pre>
+    </div>
+
+    <h2>5. Transmiterea prin valoare vs prin referință</h2>
+    <div class="card">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div>
+          <h4>Prin VALOARE (normal)</h4>
+          <p>Funcția primește o <em>copie</em> a valorii. Modificările din funcție <strong>nu afectează</strong> variabila originală.</p>
+          <div class="code-block" style="margin:0">
+            <pre><span class="tp">void</span> <span class="fn">f</span>(<span class="tp">int</span> x) {
+    x = <span class="nm">100</span>; <span class="cm">// schimba copia</span>
+}
+<span class="tp">int</span> a = <span class="nm">5</span>;
+<span class="fn">f</span>(a);
+<span class="cm">// a ramane 5!</span></pre>
+          </div>
+        </div>
+        <div>
+          <h4>Prin REFERINȚĂ (<code>&amp;</code>)</h4>
+          <p>Funcția primește <em>adresa</em> variabilei. Modificările <strong>afectează</strong> variabila originală.</p>
+          <div class="code-block" style="margin:0">
+            <pre><span class="tp">void</span> <span class="fn">f</span>(<span class="tp">int</span> <span class="kw">&amp;</span>x) {
+    x = <span class="nm">100</span>; <span class="cm">// schimba original</span>
+}
+<span class="tp">int</span> a = <span class="nm">5</span>;
+<span class="fn">f</span>(a);
+<span class="cm">// a devine 100!</span></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>Exemplu clasic: Schimbarea a două variabile (swap)</h3>
+    <div class="code-block">
+      <pre><span class="cm">// GRESIT - prin valoare (nu functioneaza)</span>
+<span class="tp">void</span> <span class="fn">schimba_gresit</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="tp">int</span> temp = a; a = b; b = temp; <span class="cm">// se modifica doar copiile!</span>
+}
+
+<span class="cm">// CORECT - prin referinta</span>
+<span class="tp">void</span> <span class="fn">schimba</span>(<span class="tp">int</span> <span class="kw">&amp;</span>a, <span class="tp">int</span> <span class="kw">&amp;</span>b) {
+    <span class="tp">int</span> temp = a; <span class="cm">// salvam valoarea lui a</span>
+    a = b;        <span class="cm">// a primeste valoarea lui b</span>
+    b = temp;     <span class="cm">// b primeste valoarea veche a lui a</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> x = <span class="nm">7</span>, y = <span class="nm">1</span>;
+    cout &lt;&lt; x &lt;&lt; <span class="st">" "</span> &lt;&lt; y &lt;&lt; endl; <span class="cm">// 7 1</span>
+    <span class="fn">schimba</span>(x, y);
+    cout &lt;&lt; x &lt;&lt; <span class="st">" "</span> &lt;&lt; y &lt;&lt; endl; <span class="cm">// 1 7</span>
+}</pre>
+    </div>
+
+    <h2>6. Declarații anticipate (prototipuri)</h2>
+    <p>Dacă vrei să definești funcția DUPĂ <code>main()</code>, trebuie să declari prototipul înainte:</p>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> <span class="fn">suma</span>(<span class="tp">int</span>, <span class="tp">int</span>); <span class="cm">// PROTOTIP - anuntam compilatorul</span>
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    cout &lt;&lt; <span class="fn">suma</span>(<span class="nm">3</span>, <span class="nm">4</span>); <span class="cm">// putem folosi functia</span>
+    <span class="kw">return</span> <span class="nm">0</span>;
+}
+
+<span class="cm">// Definim functia dupa main</span>
+<span class="tp">int</span> <span class="fn">suma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">return</span> a + b;
+}</pre>
+    </div>
+
+    <div class="card card-red">
+      <span class="tip-label tip-red">GREȘELI FRECVENTE</span>
+      <ul>
+        <li>❌ Uiți <code>return</code> la o funcție cu tip</li>
+        <li>❌ Folosești <code>return valoare;</code> într-o funcție <code>void</code></li>
+        <li>❌ Numărul de parametri la apel ≠ numărul de parametri formali</li>
+        <li>❌ Tipurile parametrilor nu corespund</li>
+        <li>❌ Folosești variabile locale în afara funcției unde au fost declarate</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- TEMA 6: DOMENII DE VIZIBILITATE -->
+<!-- ================================================================ -->
+<section id="tema6" class="section">
+  <div class="container">
+    <div class="page-header">
+      <span class="tag">Tema 6</span>
+      <h1>Domenii de vizibilitate &amp; Efecte colaterale</h1>
+    </div>
+
+    <h2>1. Cele trei tipuri de variabile</h2>
+    <table>
+      <tr>
+        <th>Tip</th>
+        <th>Unde se declară</th>
+        <th>Unde e vizibilă</th>
+        <th>Durată în memorie</th>
+      </tr>
+      <tr>
+        <td>Globală</td>
+        <td>În afara oricărei funcții</td>
+        <td>Tot programul</td>
+        <td>Toată execuția programului</td>
+      </tr>
+      <tr>
+        <td>Locală</td>
+        <td>Înăuntrul unei funcții</td>
+        <td>Doar în funcția respectivă</td>
+        <td>Doar cât durează execuția funcției</td>
+      </tr>
+      <tr>
+        <td>Parametru formal</td>
+        <td>În antetul funcției</td>
+        <td>Doar în corpul funcției</td>
+        <td>Doar cât durează execuția funcției</td>
+      </tr>
+    </table>
+
+    <h3>Exemplu vizual</h3>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span> global = <span class="nm">10</span>; <span class="cm">// ← VARIABILA GLOBALA: vizibila peste tot</span>
+
+<span class="tp">void</span> <span class="fn">functie</span>(<span class="tp">int</span> param) { <span class="cm">// param = parametru formal</span>
+    <span class="tp">int</span> locala = <span class="nm">5</span>;   <span class="cm">// ← VARIABILA LOCALA: vizibila doar in functie()</span>
+    cout &lt;&lt; global;  <span class="cm">// OK - variabila globala e vizibila</span>
+    cout &lt;&lt; locala;  <span class="cm">// OK - suntem in functie()</span>
+    cout &lt;&lt; param;   <span class="cm">// OK - parametru vizibil in corpul functiei</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    cout &lt;&lt; global;  <span class="cm">// OK</span>
+    <span class="cm">// cout &lt;&lt; locala;  // EROARE! locala nu exista in main()</span>
+    <span class="fn">functie</span>(<span class="nm">3</span>);
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+
+    <h2>2. Variabile globale — avantaje și pericole</h2>
+    <div class="card card-green">
+      <span class="tip-label tip-green">AVANTAJ: Comunicare simplă</span>
+      <p>Variabilele globale pot fi accesate și modificate din orice funcție, fără a le pasa ca parametri.</p>
+    </div>
+    <div class="card card-red">
+      <span class="tip-label tip-red">PERICOL: Efecte colaterale</span>
+      <p>Un <strong>efect colateral</strong> = o funcție modifică o variabilă globală sau un parametru prin referință în mod neașteptat.</p>
+    </div>
+
+    <h3>Exemplu de efect colateral — cum funcțiile se "influențează"</h3>
+    <div class="code-block">
+      <pre><span class="tp">int</span> c = <span class="nm">2</span>; <span class="cm">// variabila globala</span>
+
+<span class="tp">int</span> <span class="fn">f</span>(<span class="tp">int</span> a) {
+    c++;        <span class="cm">// EFECT COLATERAL: modifica variabila globala c!</span>
+    <span class="kw">return</span> c * a;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    cout &lt;&lt; <span class="fn">f</span>(c) &lt;&lt; endl; <span class="cm">// c devine 3, returneza 3*2=6</span>
+    cout &lt;&lt; <span class="fn">f</span>(c) &lt;&lt; endl; <span class="cm">// c devine 4, returneza 4*3=12</span>
+    <span class="cm">// Fiecare apel schimba c - comportament "surprinzator"!</span>
+}</pre>
+    </div>
+
+    <h2>3. Variabile locale — NU se inițializează automat</h2>
+    <div class="note note-red">
+      <strong>Atenție!</strong> Variabilele locale <strong>nu</strong> au valoare inițială automată. Conțin "gunoi" din memorie dacă nu le inițializăm explicit.
+    </div>
+    <div class="code-block">
+      <pre><span class="tp">void</span> <span class="fn">exemplu</span>() {
+    <span class="tp">int</span> x;          <span class="cm">// x contine "gunoi" (valoare aleatoare)</span>
+    <span class="tp">int</span> y = <span class="nm">0</span>;      <span class="cm">// corect: y = 0</span>
+    cout &lt;&lt; x;      <span class="cm">// PERICOL: afiseaza valoare necunoscuta</span>
+    cout &lt;&lt; y;      <span class="cm">// OK: afiseaza 0</span>
+}</pre>
+    </div>
+
+    <h2>4. Comunicarea prin variabile globale</h2>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Variabile globale — accesibile din toate functiile</span>
+<span class="tp">int</span> a, b, suma_g;
+
+<span class="tp">void</span> <span class="fn">citire</span>() {
+    cout &lt;&lt; <span class="st">"Introdu 2 numere: "</span>;
+    cin &gt;&gt; a &gt;&gt; b; <span class="cm">// a si b sunt globale, le modificam direct</span>
+}
+
+<span class="tp">int</span> <span class="fn">suma</span>() {
+    <span class="kw">return</span> a + b; <span class="cm">// accesam globalele a si b</span>
+}
+
+<span class="tp">int</span> <span class="fn">produs</span>() {
+    <span class="kw">return</span> a * b;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="fn">citire</span>();
+    cout &lt;&lt; <span class="st">"Suma: "</span> &lt;&lt; <span class="fn">suma</span>() &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Produs: "</span> &lt;&lt; <span class="fn">produs</span>() &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+
+    <h2>5. Exemplu complet: Greutatea ideală cu declarații anticipate</h2>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// PROTOTIPURI (declaratii anticipate)</span>
+<span class="tp">void</span> <span class="fn">citire</span>(<span class="tp">int</span> <span class="kw">&amp;</span>inaltime, <span class="tp">int</span> <span class="kw">&amp;</span>varsta, <span class="tp">char</span> <span class="kw">&amp;</span>sex);
+<span class="tp">float</span> <span class="fn">calcul</span>(<span class="tp">int</span> h, <span class="tp">int</span> v);
+
+<span class="cm">// Functia principala care calculeaza greutatea ideala</span>
+<span class="tp">float</span> <span class="fn">gr_ideala</span>(<span class="tp">int</span> h, <span class="tp">int</span> v, <span class="tp">char</span> g) {
+    <span class="tp">float</span> gr = <span class="fn">calcul</span>(h, v); <span class="cm">// apel la alta functie</span>
+    <span class="kw">if</span> (g == <span class="st">'f'</span>) gr = gr - <span class="nm">10</span>; <span class="cm">// feminin: scadem 10</span>
+    <span class="kw">return</span> gr;
+}
+
+<span class="cm">// Formula de calcul</span>
+<span class="tp">float</span> <span class="fn">calcul</span>(<span class="tp">int</span> h, <span class="tp">int</span> v) {
+    <span class="kw">return</span> <span class="nm">50</span> + <span class="nm">0.75</span> * (h - <span class="nm">150</span>) + (v - <span class="nm">20</span>) * <span class="nm">0.25</span>;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> varsta, inaltime; <span class="tp">char</span> gen;
+    <span class="fn">citire</span>(varsta, inaltime, gen);
+    cout &lt;&lt; <span class="st">"Greutatea ideala: "</span> &lt;&lt; <span class="fn">gr_ideala</span>(varsta, inaltime, gen);
+    <span class="kw">return</span> <span class="nm">0</span>;
+}
+
+<span class="tp">void</span> <span class="fn">citire</span>(<span class="tp">int</span> <span class="kw">&amp;</span>h, <span class="tp">int</span> <span class="kw">&amp;</span>v, <span class="tp">char</span> <span class="kw">&amp;</span>g) {
+    cout &lt;&lt; <span class="st">"Inaltimea (cm): "</span>; cin &gt;&gt; h;
+    cout &lt;&lt; <span class="st">"Varsta (ani): "</span>; cin &gt;&gt; v;
+    cout &lt;&lt; <span class="st">"Genul (m/f): "</span>; cin &gt;&gt; g;
+}</pre>
+    </div>
+
+    <div class="card card-yellow">
+      <span class="tip-label tip-yellow">CONCLUZIE CHEIE</span>
+      <ul>
+        <li>Variabilele <strong>globale</strong> sunt inițializate cu 0 automat, vizibile în tot programul</li>
+        <li>Variabilele <strong>locale</strong> există doar cât funcția rulează, trebuie inițializate manual</li>
+        <li>Efectele colaterale apar când o funcție modifică state-ul global — pot crea comportament imprevizibil</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- TEMA 7: PARAMETRI DE TIP TABLOU -->
+<!-- ================================================================ -->
+<section id="tema7" class="section">
+  <div class="container">
+    <div class="page-header">
+      <span class="tag">Tema 7</span>
+      <h1>Subprograme cu parametri de tip tablou</h1>
+    </div>
+
+    <h2>1. Tablouri ca parametri — ideea de bază</h2>
+    <div class="card card-green">
+      <span class="tip-label tip-green">IMPORTANT</span>
+      <p>Tablourile (array-urile) se transmit <strong>întotdeauna prin referință</strong> — funcția lucrează cu array-ul original, nu cu o copie. Orice modificare în funcție afectează array-ul original!</p>
+    </div>
+
+    <h2>2. Tablou unidimensional (vector)</h2>
+    <div class="syntax-box">
+      <span class="cm">// Sintaxa pentru functie care primeste vector:</span><br>
+      <span class="tp">tip</span> <span class="fn">nume_f</span>(<span class="tp">tip</span> <span class="syntax-ph">v</span>[], <span class="tp">int</span> <span class="syntax-ph">n</span>) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// n = numărul de elemente</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// v[0], v[1], ..., v[n-1] = elementele</span><br>
+      }<br><br>
+      <span class="cm">// Apel:</span><br>
+      <span class="tp">int</span> <span class="syntax-ph">a</span>[<span class="nm">100</span>];<br>
+      <span class="fn">nume_f</span>(<span class="syntax-ph">a</span>, <span class="syntax-ph">n</span>);
+    </div>
+
+    <h3>Exemplu complet: operații pe vector</h3>
+    <div class="explained-code">
+      <div class="code-header" style="background:var(--bg3);padding:0.5rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem;">
+        <div class="code-dot" style="background:#f87171"></div>
+        <div class="code-dot" style="background:#fbbf24"></div>
+        <div class="code-dot" style="background:#4ade80"></div>
+        <span class="code-title">vector_functii.cpp</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">1</span>
+        <span class="line-code"><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">2</span>
+        <span class="line-code"><span class="kw">using namespace</span> std;</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">3</span>
+        <span class="line-code"></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">4</span>
+        <span class="line-code"><span class="cm">// Citire vector</span></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">5</span>
+        <span class="line-code"><span class="tp">void</span> <span class="fn">citire</span>(<span class="tp">int</span> v[], <span class="tp">int</span> <span class="kw">&amp;</span>n) {</span>
+        <span class="line-explain">n prin referință — îl modificăm în funcție</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">6</span>
+        <span class="line-code">    cout &lt;&lt; <span class="st">"n= "</span>; cin &gt;&gt; n;</span>
+        <span class="line-explain">Citim numărul de elemente</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">7</span>
+        <span class="line-code">    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++)</span>
+        <span class="line-explain">Parcurgem pozițiile 0, 1, ..., n-1</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">8</span>
+        <span class="line-code">        cin &gt;&gt; v[i];</span>
+        <span class="line-explain">Citim elementul de pe poziția i</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">9</span>
+        <span class="line-code">}</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">10</span>
+        <span class="line-code"></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">11</span>
+        <span class="line-code"><span class="cm">// Afisare vector</span></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">12</span>
+        <span class="line-code"><span class="tp">void</span> <span class="fn">afisare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {</span>
+        <span class="line-explain">n prin valoare — nu îl modificăm</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">13</span>
+        <span class="line-code">    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++)</span>
+        <span class="line-explain">Parcurgem toate elementele</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">14</span>
+        <span class="line-code">        cout &lt;&lt; v[i] &lt;&lt; <span class="st">" "</span>;</span>
+        <span class="line-explain">Afișăm fiecare element urmat de spațiu</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">15</span>
+        <span class="line-code">    cout &lt;&lt; endl;</span>
+        <span class="line-explain">Trecem la linia nouă la final</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">16</span>
+        <span class="line-code">}</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">17</span>
+        <span class="line-code"></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">18</span>
+        <span class="line-code"><span class="cm">// Elementul maxim</span></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">19</span>
+        <span class="line-code"><span class="tp">int</span> <span class="fn">maxim</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {</span>
+        <span class="line-explain">Returnează int — maximul găsit</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">20</span>
+        <span class="line-code">    <span class="tp">int</span> m = v[<span class="nm">0</span>];</span>
+        <span class="line-explain">Presupunem că primul e maximul</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">21</span>
+        <span class="line-code">    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">1</span>; i&lt;n; i++)</span>
+        <span class="line-explain">Parcurgem de la al doilea element</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">22</span>
+        <span class="line-code">        <span class="kw">if</span> (v[i] &gt; m) m = v[i];</span>
+        <span class="line-explain">Dacă găsim ceva mai mare, actualizăm m</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">23</span>
+        <span class="line-code">    <span class="kw">return</span> m;</span>
+        <span class="line-explain">Returnăm maximul găsit</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">24</span>
+        <span class="line-code">}</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">25</span>
+        <span class="line-code"></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">26</span>
+        <span class="line-code"><span class="cm">// Sortare crescatoare (bubble sort)</span></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">27</span>
+        <span class="line-code"><span class="tp">void</span> <span class="fn">sortare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {</span>
+        <span class="line-explain">Modifică vectorul original — bun!</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">28</span>
+        <span class="line-code">    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n-<span class="nm">1</span>; i++)</span>
+        <span class="line-explain">Pasaje de sortare</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">29</span>
+        <span class="line-code">        <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;n-<span class="nm">1</span>-i; j++)</span>
+        <span class="line-explain">Comparăm perechi adiacente</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">30</span>
+        <span class="line-code">            <span class="kw">if</span> (v[j] &gt; v[j+<span class="nm">1</span>]) {</span>
+        <span class="line-explain">Dacă sunt în ordine greșită...</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">31</span>
+        <span class="line-code">                <span class="tp">int</span> t=v[j]; v[j]=v[j+<span class="nm">1</span>]; v[j+<span class="nm">1</span>]=t;</span>
+        <span class="line-explain">...le schimbăm între ele</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">32</span>
+        <span class="line-code">            }</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">33</span>
+        <span class="line-code">}</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">34</span>
+        <span class="line-code"></span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">35</span>
+        <span class="line-code"><span class="tp">int</span> <span class="fn">main</span>() {</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">36</span>
+        <span class="line-code">    <span class="tp">int</span> a[<span class="nm">100</span>], n;</span>
+        <span class="line-explain">Declarăm vectorul și dim. lui</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">37</span>
+        <span class="line-code">    <span class="fn">citire</span>(a, n);</span>
+        <span class="line-explain">Apelăm funcția de citire</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">38</span>
+        <span class="line-code">    <span class="fn">afisare</span>(a, n);</span>
+        <span class="line-explain">Afișăm vectorul</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">39</span>
+        <span class="line-code">    cout &lt;&lt; <span class="st">"Max: "</span> &lt;&lt; <span class="fn">maxim</span>(a, n);</span>
+        <span class="line-explain">Afișăm maximul</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">40</span>
+        <span class="line-code">    <span class="fn">sortare</span>(a, n); <span class="fn">afisare</span>(a, n);</span>
+        <span class="line-explain">Sortăm și afișăm din nou</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">41</span>
+        <span class="line-code">    <span class="kw">return</span> <span class="nm">0</span>;</span>
+        <span class="line-explain"></span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">42</span>
+        <span class="line-code">}</span>
+        <span class="line-explain"></span>
+      </div>
+    </div>
+
+    <h2>3. Tablou bidimensional (matrice)</h2>
+    <div class="syntax-box">
+      <span class="kw">const int</span> MAX = <span class="nm">100</span>; <span class="cm">// dimensiunea maxima</span><br><br>
+      <span class="cm">// La tablouri 2D trebuie sa specificam nr. de coloane!</span><br>
+      <span class="tp">tip</span> <span class="fn">nume_f</span>(<span class="tp">int</span> <span class="syntax-ph">t</span>[MAX][MAX], <span class="tp">int</span> <span class="syntax-ph">linii</span>, <span class="tp">int</span> <span class="syntax-ph">col</span>) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// t[i][j] = elementul de pe linia i, coloana j</span><br>
+      }<br><br>
+      <span class="cm">// Apel:</span><br>
+      <span class="tp">int</span> <span class="syntax-ph">mat</span>[MAX][MAX];<br>
+      <span class="fn">nume_f</span>(<span class="syntax-ph">mat</span>, <span class="syntax-ph">n</span>, <span class="syntax-ph">m</span>);
+    </div>
+
+    <h3>Exemplu: matrice cu funcții</h3>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+<span class="kw">const int</span> MAX = <span class="nm">100</span>;
+
+<span class="cm">// Citire matrice</span>
+<span class="tp">void</span> <span class="fn">citire</span>(<span class="tp">int</span> t[MAX][MAX], <span class="tp">int</span> <span class="kw">&amp;</span>n, <span class="tp">int</span> <span class="kw">&amp;</span>m) {
+    cout &lt;&lt; <span class="st">"Linii: "</span>; cin &gt;&gt; n;
+    cout &lt;&lt; <span class="st">"Coloane: "</span>; cin &gt;&gt; m;
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++)      <span class="cm">// parcurgem liniile</span>
+        <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;m; j++)  <span class="cm">// parcurgem coloanele</span>
+            cin &gt;&gt; t[i][j];          <span class="cm">// citim elementul</span>
+}
+
+<span class="cm">// Afisare matrice</span>
+<span class="tp">void</span> <span class="fn">afisare</span>(<span class="tp">int</span> t[MAX][MAX], <span class="tp">int</span> n, <span class="tp">int</span> m) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) {
+        <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;m; j++)
+            cout &lt;&lt; t[i][j] &lt;&lt; <span class="st">" "</span>;
+        cout &lt;&lt; endl; <span class="cm">// rand nou dupa fiecare linie</span>
+    }
+}
+
+<span class="cm">// Maximul din matrice</span>
+<span class="tp">int</span> <span class="fn">maxim</span>(<span class="tp">int</span> t[MAX][MAX], <span class="tp">int</span> n, <span class="tp">int</span> m) {
+    <span class="tp">int</span> max_val = t[<span class="nm">0</span>][<span class="nm">0</span>]; <span class="cm">// incepem cu primul element</span>
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++)
+        <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;m; j++)
+            <span class="kw">if</span> (t[i][j] &gt; max_val) max_val = t[i][j];
+    <span class="kw">return</span> max_val;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> mat[MAX][MAX], n, m;
+    <span class="fn">citire</span>(mat, n, m);
+    cout &lt;&lt; <span class="st">"Matricea:\n"</span>;
+    <span class="fn">afisare</span>(mat, n, m);
+    cout &lt;&lt; <span class="st">"Max = "</span> &lt;&lt; <span class="fn">maxim</span>(mat, n, m);
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+
+    <h2>4. Tablou de caractere (șir de caractere)</h2>
+    <div class="syntax-box">
+      <span class="cm">// Sintaxa pentru functie cu sir de caractere:</span><br>
+      <span class="tp">tip</span> <span class="fn">nume_f</span>(<span class="tp">char</span> <span class="syntax-ph">s</span>[]) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// Nu trebuie sa dam dimensiunea — se termina cu '\0'</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">// strlen(s) ne da lungimea</span><br>
+      }<br><br>
+      <span class="cm">// Apel:</span><br>
+      <span class="tp">char</span> <span class="syntax-ph">sir</span>[<span class="nm">100</span>];<br>
+      cin &gt;&gt; <span class="syntax-ph">sir</span>;<br>
+      <span class="fn">nume_f</span>(<span class="syntax-ph">sir</span>);
+    </div>
+
+    <h3>Exemplu: inversarea unui șir de caractere</h3>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="st">&lt;cstring&gt;</span>   <span class="cm">// pentru strlen()</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">void</span> <span class="fn">inversare</span>(<span class="tp">char</span> s[]) {
+    <span class="tp">int</span> n = strlen(s); <span class="cm">// n = lungimea sirului</span>
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n/<span class="nm">2</span>; i++) {  <span class="cm">// mergem pana la mijloc</span>
+        <span class="tp">char</span> temp = s[i];
+        s[i] = s[n-<span class="nm">1</span>-i];          <span class="cm">// primul ↔ ultimul</span>
+        s[n-<span class="nm">1</span>-i] = temp;
+    }
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">char</span> cuvant[<span class="nm">100</span>];
+    cout &lt;&lt; <span class="st">"Scrie un cuvant: "</span>;
+    cin &gt;&gt; cuvant;
+    <span class="fn">inversare</span>(cuvant);
+    cout &lt;&lt; <span class="st">"Inversat: "</span> &lt;&lt; cuvant &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}
+<span class="cm">// Exemplu: "salut" → "tulas"</span></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- TEMA 8: SUBPROGRAME RECURSIVE -->
+<!-- ================================================================ -->
+<section id="tema8" class="section">
+  <div class="container">
+    <div class="page-header">
+      <span class="tag">Tema 8</span>
+      <h1>Subprograme recursive</h1>
+    </div>
+
+    <h2>1. Ce este recursivitatea?</h2>
+    <div class="card card-green">
+      <span class="tip-label tip-green">DEFINIȚIE SIMPLĂ</span>
+      <p>O funcție este <strong>recursivă</strong> dacă se apelează pe sine însuși. E ca o oglindă cu oglinzi — rezultatul unui pas depinde de un pas mai mic.</p>
+    </div>
+
+    <p>Orice funcție recursivă are OBLIGATORIU două părți:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+      <div class="card card-blue">
+        <h4>1. Cazul de bază (stop)</h4>
+        <p>Condiția care <strong>oprește</strong> recursivitatea. Fără el, funcția ar rula la infinit → program crash.</p>
+      </div>
+      <div class="card card-purple">
+        <h4>2. Apelul recursiv</h4>
+        <p>Funcția se apelează pe sine cu un argument <strong>mai mic/simplu</strong>, apropiindu-se de cazul de bază.</p>
+      </div>
+    </div>
+
+    <div class="syntax-box">
+      <span class="tp">tip</span> <span class="fn">nume_f</span>(<span class="syntax-ph">parametri</span>) {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">if</span> (<span class="syntax-ph">caz_de_baza</span>)      <span class="cm">// STOP — returnăm direct</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="syntax-ph">valoare_simpla</span>;<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">else</span>                    <span class="cm">// RECURSIV — ne apelăm cu caz mai mic</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="fn">nume_f</span>(<span class="syntax-ph">parametri_mai_mici</span>);<br>
+      }
+    </div>
+
+    <h2>2. Exemplu clasic: Factorial</h2>
+    <p>Matematică: n! = n × (n-1) × (n-2) × ... × 1, iar 0! = 1</p>
+    <div class="explained-code">
+      <div class="code-header" style="background:var(--bg3);padding:0.5rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.5rem;">
+        <div class="code-dot" style="background:#f87171"></div>
+        <div class="code-dot" style="background:#fbbf24"></div>
+        <div class="code-dot" style="background:#4ade80"></div>
+        <span class="code-title">factorial.cpp</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">1</span>
+        <span class="line-code"><span class="tp">long int</span> <span class="fn">factorial</span>(<span class="tp">int</span> n) {</span>
+        <span class="line-explain">long int — pentru numere mari</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">2</span>
+        <span class="line-code">    <span class="kw">if</span> (n == <span class="nm">0</span>)</span>
+        <span class="line-explain">CAZ DE BAZĂ: 0! = 1</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">3</span>
+        <span class="line-code">        <span class="kw">return</span> <span class="nm">1</span>;</span>
+        <span class="line-explain">Oprire: returnăm 1</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">4</span>
+        <span class="line-code">    <span class="kw">else</span></span>
+        <span class="line-explain">CAZ RECURSIV</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">5</span>
+        <span class="line-code">        <span class="kw">return</span> n * <span class="fn">factorial</span>(n - <span class="nm">1</span>);</span>
+        <span class="line-explain">n × factorial cu n-1 (mai mic!)</span>
+      </div>
+      <div class="code-line">
+        <span class="line-num">6</span>
+        <span class="line-code">}</span>
+        <span class="line-explain"></span>
+      </div>
+    </div>
+
+    <div class="card card-purple">
+      <span class="tip-label tip-purple">CUM FUNCȚIONEAZĂ — PAS CU PAS</span>
+      <p>factorial(4) → 4 × factorial(3)<br>
+      &nbsp;&nbsp;→ 4 × 3 × factorial(2)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;→ 4 × 3 × 2 × factorial(1)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ 4 × 3 × 2 × 1 × factorial(0)<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ 4 × 3 × 2 × 1 × <strong>1</strong> = <strong>24</strong> ✅</p>
+    </div>
+
+    <h2>3. Exemplu: Suma 1+2+3+...+n</h2>
+    <div class="code-block">
+      <pre><span class="tp">int</span> <span class="fn">suma</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">0</span>)            <span class="cm">// caz de baza: suma pana la 0 este 0</span>
+        <span class="kw">return</span> <span class="nm">0</span>;
+    <span class="kw">else</span>
+        <span class="kw">return</span> n + <span class="fn">suma</span>(n-<span class="nm">1</span>); <span class="cm">// n + suma pana la n-1</span>
+}
+<span class="cm">// suma(4) = 4 + suma(3) = 4 + 3 + suma(2) = ... = 4+3+2+1+0 = 10</span></pre>
+    </div>
+
+    <h2>4. Exemplu: Numărul de cifre</h2>
+    <div class="code-block">
+      <pre><span class="tp">int</span> <span class="fn">cifre</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">0</span>)            <span class="cm">// caz de baza: 0 are 0 cifre</span>
+        <span class="kw">return</span> <span class="nm">0</span>;
+    <span class="kw">else</span>
+        <span class="kw">return</span> <span class="nm">1</span> + <span class="fn">cifre</span>(n/<span class="nm">10</span>); <span class="cm">// 1 cifra + cifrele din n/10</span>
+}
+<span class="cm">// cifre(1234) = 1 + cifre(123) = 2 + cifre(12) = 3 + cifre(1) = 4 + cifre(0) = 4</span></pre>
+    </div>
+
+    <h2>5. Exemplu: Șirul Fibonacci</h2>
+    <p>Șirul: 1 1 2 3 5 8 13 21 ... Fiecare termen = suma celor două precedente</p>
+    <div class="code-block">
+      <pre><span class="tp">int</span> <span class="fn">fib</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">0</span>) <span class="kw">return</span> <span class="nm">1</span>; <span class="cm">// cazuri de baza</span>
+    <span class="kw">if</span> (n == <span class="nm">1</span>) <span class="kw">return</span> <span class="nm">1</span>;
+    <span class="kw">else</span> <span class="kw">return</span> <span class="fn">fib</span>(n-<span class="nm">1</span>) + <span class="fn">fib</span>(n-<span class="nm">2</span>); <span class="cm">// suma celor doua precedente</span>
+}
+<span class="cm">// fib(4) = fib(3) + fib(2) = (fib(2)+fib(1)) + (fib(1)+fib(0)) = (2+1)+(1+1) = 5</span></pre>
+    </div>
+
+    <h2>6. CMMDC recursiv</h2>
+    <div class="code-block">
+      <pre><span class="cm">// Varianta 1: prin scaderi repetate</span>
+<span class="tp">int</span> <span class="fn">cmmdc</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">if</span> (a*b == <span class="nm">0</span>) <span class="kw">return</span> a+b; <span class="cm">// caz de baza: unul e 0</span>
+    <span class="kw">if</span> (a &gt; b) <span class="kw">return</span> <span class="fn">cmmdc</span>(a-b, b);
+    <span class="kw">else</span> <span class="kw">return</span> <span class="fn">cmmdc</span>(a, b-a);
+}
+
+<span class="cm">// Varianta 2: prin impartiri (mai eficienta)</span>
+<span class="tp">int</span> <span class="fn">cmmdc2</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">if</span> (b == <span class="nm">0</span>) <span class="kw">return</span> a; <span class="cm">// caz de baza</span>
+    <span class="kw">return</span> <span class="fn">cmmdc2</span>(b, a%b);  <span class="cm">// cmmdc(a,b) = cmmdc(b, restul a/b)</span>
+}</pre>
+    </div>
+
+    <h2>7. Recursivitate pe tablouri</h2>
+    <div class="code-block">
+      <pre><span class="cm">// Suma elementelor unui vector recursiv</span>
+<span class="tp">int</span> <span class="fn">suma_v</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">0</span>) <span class="kw">return</span> v[<span class="nm">0</span>]; <span class="cm">// cazul de baza: un singur element</span>
+    <span class="kw">else</span> <span class="kw">return</span> v[n] + <span class="fn">suma_v</span>(v, n-<span class="nm">1</span>);
+}
+
+<span class="cm">// Afisare inversa a vectorului</span>
+<span class="tp">void</span> <span class="fn">afisare_inversa</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">0</span>) { cout &lt;&lt; v[<span class="nm">0</span>] &lt;&lt; <span class="st">" "</span>; <span class="kw">return</span>; }
+    cout &lt;&lt; v[n] &lt;&lt; <span class="st">" "</span>;      <span class="cm">// afisam ultimul</span>
+    <span class="fn">afisare_inversa</span>(v, n-<span class="nm">1</span>);  <span class="cm">// continuam cu restul</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> a[] = {<span class="nm">4</span>, <span class="nm">5</span>, <span class="nm">7</span>, <span class="nm">8</span>};
+    cout &lt;&lt; <span class="fn">suma_v</span>(a, <span class="nm">3</span>);     <span class="cm">// 4+5+7+8 = 24</span>
+    <span class="fn">afisare_inversa</span>(a, <span class="nm">3</span>);   <span class="cm">// 8 7 5 4</span>
+}</pre>
+    </div>
+
+    <div class="card card-red">
+      <span class="tip-label tip-red">GREȘELI FRECVENTE LA RECURSIVITATE</span>
+      <ul>
+        <li>❌ <strong>Uiți cazul de bază</strong> → bucla infinită, program crash (stack overflow)</li>
+        <li>❌ <strong>Cazul recursiv nu "scade"</strong> spre cazul de bază</li>
+        <li>❌ Parametrul nu se modifică în apelul recursiv (ex: <code>fib(n)</code> în loc de <code>fib(n-1)</code>)</li>
+      </ul>
+    </div>
+
+    <div class="card card-yellow">
+      <span class="tip-label tip-yellow">RECURSIV vs ITERATIV</span>
+      <p>Orice funcție recursivă poate fi rescrisă iterativ (cu bucle) și invers. Recursivitatea e mai elegantă dar folosește mai multă memorie (stivă). Pentru teste, amândouă sunt corecte.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- EXERCITII -->
+<!-- ================================================================ -->
+<section id="exercitii" class="section">
+  <div class="container">
+    <div class="page-header">
+      <span class="tag">Exerciții rezolvate</span>
+      <h1>Probleme din culegere — rezolvate pas cu pas</h1>
+    </div>
+
+    <!-- EX 1 -->
+    <div class="exercise">
+      <div class="exercise-header">
+        <span class="ex-num">Exercițiul 1 § 1</span>
+        <span class="ex-title">Operații pe un număr întreg cu funcții</span>
+      </div>
+      <div class="exercise-body">
+        <p><strong>Enunț:</strong> De la tastatură se citește un număr întreg n (n&lt;100000). Elaborați un program cu funcții care determină: a) Numărul de cifre; b) Suma cifrelor; c) Cifra maximă; d) Cifra minimă; e) Inversul numărului.</p>
+        <div class="steps">
+          <div class="step">
+            <strong>Planificăm funcțiile:</strong> Vom crea câte o funcție pentru fiecare operație.
+          </div>
+          <div class="step">
+            <strong>Cheia pentru cifre:</strong> Extragem cifrele cu <code>n%10</code> (ultima cifră) și <code>n/10</code> (restul numărului).
+          </div>
+          <div class="step">
+            <strong>Scriem codul:</strong>
+          </div>
+        </div>
+        <div class="code-block">
+          <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// a) Numarul de cifre</span>
+<span class="tp">int</span> <span class="fn">nrCifre</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">0</span>) n = -n;   <span class="cm">// tratam si numerele negative</span>
+    <span class="kw">if</span> (n == <span class="nm">0</span>) <span class="kw">return</span> <span class="nm">1</span>;  <span class="cm">// 0 are o cifra</span>
+    <span class="tp">int</span> cnt = <span class="nm">0</span>;
+    <span class="kw">while</span> (n > <span class="nm">0</span>) {
+        cnt++;       <span class="cm">// numaram fiecare cifra</span>
+        n = n / <span class="nm">10</span>; <span class="cm">// eliminam ultima cifra</span>
+    }
+    <span class="kw">return</span> cnt;
+}
+
+<span class="cm">// b) Suma cifrelor</span>
+<span class="tp">int</span> <span class="fn">sumaCifre</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">0</span>) n = -n;
+    <span class="tp">int</span> s = <span class="nm">0</span>;
+    <span class="kw">while</span> (n > <span class="nm">0</span>) {
+        s += n % <span class="nm">10</span>;  <span class="cm">// adunam ultima cifra</span>
+        n = n / <span class="nm">10</span>;   <span class="cm">// eliminam ultima cifra</span>
+    }
+    <span class="kw">return</span> s;
+}
+
+<span class="cm">// c) Cifra maxima</span>
+<span class="tp">int</span> <span class="fn">cifrMax</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">0</span>) n = -n;
+    <span class="tp">int</span> maxC = <span class="nm">0</span>;  <span class="cm">// cifra maxima gasita</span>
+    <span class="kw">while</span> (n > <span class="nm">0</span>) {
+        <span class="tp">int</span> c = n % <span class="nm">10</span>;    <span class="cm">// ultima cifra</span>
+        <span class="kw">if</span> (c > maxC) maxC = c; <span class="cm">// actualizam daca e mai mare</span>
+        n = n / <span class="nm">10</span>;
+    }
+    <span class="kw">return</span> maxC;
+}
+
+<span class="cm">// d) Cifra minima</span>
+<span class="tp">int</span> <span class="fn">cifrMin</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">0</span>) n = -n;
+    <span class="tp">int</span> minC = <span class="nm">9</span>;   <span class="cm">// incepem cu maximul posibil</span>
+    <span class="kw">while</span> (n > <span class="nm">0</span>) {
+        <span class="tp">int</span> c = n % <span class="nm">10</span>;
+        <span class="kw">if</span> (c &lt; minC) minC = c;
+        n = n / <span class="nm">10</span>;
+    }
+    <span class="kw">return</span> minC;
+}
+
+<span class="cm">// e) Inversul numărului</span>
+<span class="tp">int</span> <span class="fn">invers</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">0</span>) n = -n;
+    <span class="tp">int</span> inv = <span class="nm">0</span>;
+    <span class="kw">while</span> (n > <span class="nm">0</span>) {
+        inv = inv * <span class="nm">10</span> + n % <span class="nm">10</span>; <span class="cm">// construim inversul cifra cu cifra</span>
+        n = n / <span class="nm">10</span>;
+    }
+    <span class="kw">return</span> inv;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> n;
+    cout &lt;&lt; <span class="st">"n= "</span>; cin &gt;&gt; n;
+    cout &lt;&lt; <span class="st">"Nr. cifre: "</span>    &lt;&lt; <span class="fn">nrCifre</span>(n)    &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Suma cifrelor: "</span> &lt;&lt; <span class="fn">sumaCifre</span>(n)  &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Cifra maxima: "</span>  &lt;&lt; <span class="fn">cifrMax</span>(n)    &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Cifra minima: "</span>  &lt;&lt; <span class="fn">cifrMin</span>(n)    &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Invers: "</span>        &lt;&lt; <span class="fn">invers</span>(n)     &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}
+<span class="cm">// Exemplu: n=12345 → cifre=5, suma=15, max=5, min=1, invers=54321</span></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- EX 2 -->
+    <div class="exercise">
+      <div class="exercise-header">
+        <span class="ex-num">Exercițiul 2 § 1</span>
+        <span class="ex-title">Două numere întregi — operații cu funcții</span>
+      </div>
+      <div class="exercise-body">
+        <p><strong>Enunț:</strong> De la tastatură se citesc două numere întregi. Determinați prin funcții: a) Suma; b) Produsul; c) Media aritmetică; d) CMMDC; e) CMMMC; f) Numărul minim; g) Numărul maxim.</p>
+        <div class="code-block">
+          <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">int</span>    <span class="fn">suma</span>(<span class="tp">int</span> a, <span class="tp">int</span> b)    { <span class="kw">return</span> a + b; }
+<span class="tp">long</span>   <span class="fn">produs</span>(<span class="tp">int</span> a, <span class="tp">int</span> b)  { <span class="kw">return</span> (<span class="tp">long</span>)a * b; }
+<span class="tp">double</span> <span class="fn">media</span>(<span class="tp">int</span> a, <span class="tp">int</span> b)   { <span class="kw">return</span> (a + b) / <span class="nm">2.0</span>; }
+<span class="tp">int</span>    <span class="fn">minim</span>(<span class="tp">int</span> a, <span class="tp">int</span> b)   { <span class="kw">return</span> (a &lt; b) ? a : b; }
+<span class="tp">int</span>    <span class="fn">maxim</span>(<span class="tp">int</span> a, <span class="tp">int</span> b)   { <span class="kw">return</span> (a &gt; b) ? a : b; }
+
+<span class="cm">// CMMDC (cel mai mare divizor comun)</span>
+<span class="tp">int</span> <span class="fn">cmmdc</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">while</span> (b != <span class="nm">0</span>) {
+        <span class="tp">int</span> r = a % b; <span class="cm">// calculam restul</span>
+        a = b;          <span class="cm">// a devine b</span>
+        b = r;          <span class="cm">// b devine restul</span>
+    }
+    <span class="kw">return</span> a; <span class="cm">// cand b=0, a este cmmdc</span>
+}
+
+<span class="cm">// CMMMC (cel mai mic multiplu comun)</span>
+<span class="tp">long</span> <span class="fn">cmmmc</span>(<span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">return</span> (<span class="tp">long</span>)a / <span class="fn">cmmdc</span>(a, b) * b; <span class="cm">// formula: a*b/cmmdc(a,b)</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> a, b;
+    cout &lt;&lt; <span class="st">"Doua numere: "</span>; cin &gt;&gt; a &gt;&gt; b;
+    cout &lt;&lt; <span class="st">"Suma: "</span>   &lt;&lt; <span class="fn">suma</span>(a,b)   &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Produs: "</span> &lt;&lt; <span class="fn">produs</span>(a,b) &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Media: "</span>  &lt;&lt; <span class="fn">media</span>(a,b)  &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"CMMDC: "</span>  &lt;&lt; <span class="fn">cmmdc</span>(a,b)  &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"CMMMC: "</span>  &lt;&lt; <span class="fn">cmmmc</span>(a,b)  &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Min: "</span>    &lt;&lt; <span class="fn">minim</span>(a,b)  &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Max: "</span>    &lt;&lt; <span class="fn">maxim</span>(a,b)  &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- EX 3 -->
+    <div class="exercise">
+      <div class="exercise-header">
+        <span class="ex-num">Exercițiul 3 § 2 (proceduri void)</span>
+        <span class="ex-title">Citire cu proceduri — timp ora:min:sec</span>
+      </div>
+      <div class="exercise-body">
+        <p><strong>Enunț:</strong> Se consideră tipul de date timp (ora:min:sec). Elaborați un program cu proceduri pentru: a) Citire; b) Afișare; c) Suma a două variabile de tip timp.</p>
+        <div class="code-block">
+          <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Structura pentru timp</span>
+<span class="kw">struct</span> Timp {
+    <span class="tp">int</span> ora, min, sec;
+};
+
+<span class="cm">// a) Procedura de citire</span>
+<span class="tp">void</span> <span class="fn">citire</span>(Timp <span class="kw">&amp;</span>t) {  <span class="cm">// &amp; necesar - vrem sa modificam t</span>
+    cout &lt;&lt; <span class="st">"Ora: "</span>; cin &gt;&gt; t.ora;
+    cout &lt;&lt; <span class="st">"Min: "</span>; cin &gt;&gt; t.min;
+    cout &lt;&lt; <span class="st">"Sec: "</span>; cin &gt;&gt; t.sec;
+}
+
+<span class="cm">// b) Procedura de afisare (cu validare)</span>
+<span class="tp">void</span> <span class="fn">afisare</span>(Timp t) {  <span class="cm">// prin valoare - nu modificam</span>
+    <span class="kw">if</span> (t.sec &gt;= <span class="nm">0</span> &amp;&amp; t.sec &lt;= <span class="nm">59</span> &amp;&amp; t.min &gt;= <span class="nm">0</span> &amp;&amp; t.min &lt;= <span class="nm">59</span>)
+        cout &lt;&lt; t.ora &lt;&lt; <span class="st">":"</span> &lt;&lt; t.min &lt;&lt; <span class="st">":"</span> &lt;&lt; t.sec;
+    <span class="kw">else</span>
+        cout &lt;&lt; <span class="st">"Timp invalid!"</span>;
+}
+
+<span class="cm">// c) Suma a doua timpuri</span>
+Timp <span class="fn">suma</span>(Timp t1, Timp t2) {
+    Timp rez;
+    <span class="tp">int</span> total_sec = (t1.ora*<span class="nm">3600</span> + t1.min*<span class="nm">60</span> + t1.sec) +
+                    (t2.ora*<span class="nm">3600</span> + t2.min*<span class="nm">60</span> + t2.sec);
+    rez.ora = total_sec / <span class="nm">3600</span>;
+    rez.min = (total_sec % <span class="nm">3600</span>) / <span class="nm">60</span>;
+    rez.sec = total_sec % <span class="nm">60</span>;
+    <span class="kw">return</span> rez;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    Timp t1, t2, t3;
+    cout &lt;&lt; <span class="st">"Primul timp:\n"</span>; <span class="fn">citire</span>(t1);
+    cout &lt;&lt; <span class="st">"Al doilea timp:\n"</span>; <span class="fn">citire</span>(t2);
+    <span class="fn">afisare</span>(t1); cout &lt;&lt; <span class="st">" + "</span>; <span class="fn">afisare</span>(t2);
+    t3 = <span class="fn">suma</span>(t1, t2);
+    cout &lt;&lt; <span class="st">" = "</span>; <span class="fn">afisare</span>(t3);
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- EX TABLOU -->
+    <div class="exercise">
+      <div class="exercise-header">
+        <span class="ex-num">Exercițiul 4 § 3 (tablouri)</span>
+        <span class="ex-title">Tablou unidimensional — toate operațiile</span>
+      </div>
+      <div class="exercise-body">
+        <p><strong>Enunț:</strong> Tablou unidimensional. Funcții pentru: citire, afișare, sortare crescătoare, inversare, elementul maximal/minimal, numărul de elemente maximale/minimale.</p>
+        <div class="code-block">
+          <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="tp">void</span> <span class="fn">citire</span>(<span class="tp">int</span> v[], <span class="tp">int</span> <span class="kw">&amp;</span>n) {
+    cout &lt;&lt; <span class="st">"n= "</span>; cin &gt;&gt; n;
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) {
+        cout &lt;&lt; <span class="st">"v["</span>&lt;&lt;i&lt;&lt;<span class="st">"]= "</span>; cin &gt;&gt; v[i];
+    }
+}
+
+<span class="tp">void</span> <span class="fn">afisare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) cout &lt;&lt; v[i] &lt;&lt; <span class="st">" "</span>;
+    cout &lt;&lt; endl;
+}
+
+<span class="tp">int</span> <span class="fn">maxim</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="tp">int</span> m = v[<span class="nm">0</span>];
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">1</span>; i&lt;n; i++) <span class="kw">if</span> (v[i]>m) m=v[i];
+    <span class="kw">return</span> m;
+}
+
+<span class="tp">int</span> <span class="fn">minim</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="tp">int</span> m = v[<span class="nm">0</span>];
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">1</span>; i&lt;n; i++) <span class="kw">if</span> (v[i]&lt;m) m=v[i];
+    <span class="kw">return</span> m;
+}
+
+<span class="cm">// Nr. de aparitii ale valorii x in vector</span>
+<span class="tp">int</span> <span class="fn">nrAparitii</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n, <span class="tp">int</span> x) {
+    <span class="tp">int</span> cnt = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) <span class="kw">if</span> (v[i]==x) cnt++;
+    <span class="kw">return</span> cnt;
+}
+
+<span class="tp">void</span> <span class="fn">inversare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n/<span class="nm">2</span>; i++) {
+        <span class="tp">int</span> t=v[i]; v[i]=v[n-<span class="nm">1</span>-i]; v[n-<span class="nm">1</span>-i]=t;
+    }
+}
+
+<span class="tp">void</span> <span class="fn">sortare_cresc</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n-<span class="nm">1</span>; i++)
+        <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;n-<span class="nm">1</span>-i; j++)
+            <span class="kw">if</span> (v[j] > v[j+<span class="nm">1</span>]) {
+                <span class="tp">int</span> t=v[j]; v[j]=v[j+<span class="nm">1</span>]; v[j+<span class="nm">1</span>]=t;
+            }
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> a[<span class="nm">100</span>], n;
+    <span class="fn">citire</span>(a, n);
+    cout &lt;&lt; <span class="st">"Vectorul: "</span>; <span class="fn">afisare</span>(a, n);
+    cout &lt;&lt; <span class="st">"Max= "</span> &lt;&lt; <span class="fn">maxim</span>(a,n) &lt;&lt; <span class="st">", Min= "</span> &lt;&lt; <span class="fn">minim</span>(a,n) &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Nr. maxime= "</span> &lt;&lt; <span class="fn">nrAparitii</span>(a,n,<span class="fn">maxim</span>(a,n)) &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Nr. minime= "</span> &lt;&lt; <span class="fn">nrAparitii</span>(a,n,<span class="fn">minim</span>(a,n)) &lt;&lt; endl;
+    <span class="fn">sortare_cresc</span>(a, n);
+    cout &lt;&lt; <span class="st">"Sortat: "</span>; <span class="fn">afisare</span>(a, n);
+    <span class="fn">inversare</span>(a, n);
+    cout &lt;&lt; <span class="st">"Inversat: "</span>; <span class="fn">afisare</span>(a, n);
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- EX RECURSIV -->
+    <div class="exercise">
+      <div class="exercise-header">
+        <span class="ex-num">Exercițiul 5 § 4 (recursiv)</span>
+        <span class="ex-title">Serii matematice recursive</span>
+      </div>
+      <div class="exercise-body">
+        <p><strong>Enunț:</strong> Calculați recursiv: a) 1+3+5+...+(2n-1), b) 2+4+6+...+2n, g) -1/2 + 1/4 - 1/8 + 1/16 - ... + (-1)^n × 1/2^n</p>
+        <div class="code-block">
+          <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="st">&lt;cmath&gt;</span>  <span class="cm">// pentru pow()</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// a) Suma numerelor impare: 1+3+5+...+(2n-1)</span>
+<span class="tp">int</span> <span class="fn">suma_impare</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">1</span>) <span class="kw">return</span> <span class="nm">1</span>;          <span class="cm">// caz de baza: 2*1-1 = 1</span>
+    <span class="kw">return</span> (<span class="nm">2</span>*n-<span class="nm">1</span>) + <span class="fn">suma_impare</span>(n-<span class="nm">1</span>); <span class="cm">// termenul curent + suma prec.</span>
+}
+
+<span class="cm">// b) Suma numerelor pare: 2+4+6+...+2n</span>
+<span class="tp">int</span> <span class="fn">suma_pare</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">1</span>) <span class="kw">return</span> <span class="nm">2</span>;       <span class="cm">// caz de baza: 2*1 = 2</span>
+    <span class="kw">return</span> <span class="nm">2</span>*n + <span class="fn">suma_pare</span>(n-<span class="nm">1</span>); <span class="cm">// 2*n + suma pana la n-1</span>
+}
+
+<span class="cm">// g) -1/2 + 1/4 - ... + (-1)^n * 1/2^n</span>
+<span class="tp">double</span> <span class="fn">serie_alterna</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">1</span>) <span class="kw">return</span> -<span class="nm">0.5</span>;      <span class="cm">// caz de baza: -1/2</span>
+    <span class="kw">return</span> pow(-<span class="nm">1</span>, n) / pow(<span class="nm">2</span>, n) + <span class="fn">serie_alterna</span>(n-<span class="nm">1</span>);
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> n;
+    cout &lt;&lt; <span class="st">"n= "</span>; cin &gt;&gt; n;
+    cout &lt;&lt; <span class="st">"a) Suma impare: "</span> &lt;&lt; <span class="fn">suma_impare</span>(n) &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"b) Suma pare: "</span>   &lt;&lt; <span class="fn">suma_pare</span>(n)   &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"g) Serie: "</span>       &lt;&lt; <span class="fn">serie_alterna</span>(n) &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- CHEAT SHEET -->
+<!-- ================================================================ -->
+<section id="cheatsheet" class="section">
+  <div class="container">
+    <div class="page-header">
+      <span class="tag">Referință rapidă</span>
+      <h1>Cheat Sheet — Tot ce trebuie să știi</h1>
+    </div>
+
+    <div class="cheat-grid">
+      <div class="cheat-card">
+        <h4>Funcție cu tip</h4>
+        <code>int nume(int a, int b) { return a+b; }</code>
+        <p>Returnează o valoare. Apel: <code>x = nume(5, 3);</code></p>
+      </div>
+      <div class="cheat-card">
+        <h4>Funcție void (procedură)</h4>
+        <code>void nume(int a) { cout &lt;&lt; a; }</code>
+        <p>Nu returnează. Apel: <code>nume(5);</code> — linie separată</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Parametru prin VALOARE</h4>
+        <code>void f(int x) { x = 100; }</code>
+        <p>Variabila originală NU se schimbă. x este copie.</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Parametru prin REFERINȚĂ</h4>
+        <code>void f(int &amp;x) { x = 100; }</code>
+        <p>Variabila originală SE SCHIMBĂ. &amp; = adresă.</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Vector ca parametru</h4>
+        <code>void f(int v[], int n) { v[0]=1; }</code>
+        <p>Array-urile se transmit MEREU prin referință!</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Matrice ca parametru</h4>
+        <code>const int M=100; void f(int t[M][M], int n, int m)</code>
+        <p>Trebuie specificat nr. de coloane (sau constanta).</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Șir de caractere</h4>
+        <code>void f(char s[]) { int n=strlen(s); }</code>
+        <p>Include <code>&lt;cstring&gt;</code> pentru <code>strlen()</code>.</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Prototip (declarație anticipată)</h4>
+        <code>int suma(int, int);</code>
+        <p>Scris înainte de main() dacă funcția e definită după.</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Variabilă globală</h4>
+        <code>int g = 0; // in afara oricărei funcții</code>
+        <p>Vizibilă în tot programul. Init. cu 0 automat.</p>
+      </div>
+      <div class="cheat-card">
+        <h4>Recursivitate — model</h4>
+        <code>int f(int n) { if(n==0) return 1; return n*f(n-1); }</code>
+        <p>Caz de bază + apel recursiv cu argument mai mic.</p>
+      </div>
+      <div class="cheat-card">
+        <h4>CMMDC (algoritm Euclid)</h4>
+        <code>int cmmdc(int a,int b){while(b){int r=a%b;a=b;b=r;}return a;}</code>
+        <p>Sau recursiv: <code>if(!b) return a; return cmmdc(b,a%b);</code></p>
+      </div>
+      <div class="cheat-card">
+        <h4>Maxim din vector</h4>
+        <code>int m=v[0]; for(i=1;i&lt;n;i++) if(v[i]&gt;m) m=v[i];</code>
+        <p>Începe cu primul element, actualizează dacă găsești mai mare.</p>
+      </div>
+    </div>
+
+    <h2>Sintaxe importante de reținut</h2>
+    <table>
+      <tr><th>Operație</th><th>Sintaxă</th><th>Notă</th></tr>
+      <tr><td>Extrage ultima cifră</td><td><code>n % 10</code></td><td>ex: 1234 % 10 = 4</td></tr>
+      <tr><td>Elimină ultima cifră</td><td><code>n / 10</code></td><td>ex: 1234 / 10 = 123</td></tr>
+      <tr><td>Verifică par</td><td><code>n % 2 == 0</code></td><td>restul împărțirii la 2 este 0</td></tr>
+      <tr><td>Verifică impar</td><td><code>n % 2 != 0</code> sau <code>n % 2 == 1</code></td><td></td></tr>
+      <tr><td>Valoare absolută</td><td><code>if(n&lt;0) n=-n;</code></td><td>sau <code>abs(n)</code> cu &lt;cmath&gt;</td></tr>
+      <tr><td>Operator ternar</td><td><code>(a &gt; b) ? a : b</code></td><td>dacă a&gt;b alege a, altfel b</td></tr>
+      <tr><td>Lungime șir</td><td><code>strlen(s)</code></td><td>necesită &lt;cstring&gt;</td></tr>
+      <tr><td>Swap (schimb)</td><td><code>int t=a; a=b; b=t;</code></td><td>clasicul cu variabila temporară</td></tr>
+    </table>
+
+    <h2>Structura programului cu funcții</h2>
+    <div class="code-block">
+      <pre><span class="cm">// 1. Include-uri</span>
+<span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// 2. Variabile globale (optional)</span>
+<span class="tp">int</span> global_var = <span class="nm">0</span>;
+
+<span class="cm">// 3. Prototipuri (daca functiile sunt dupa main)</span>
+<span class="tp">int</span> <span class="fn">functie1</span>(<span class="tp">int</span>);
+<span class="tp">void</span> <span class="fn">functie2</span>(<span class="tp">int</span> [], <span class="tp">int</span>);
+
+<span class="cm">// 4. Definitii de functii</span>
+<span class="tp">int</span> <span class="fn">functie1</span>(<span class="tp">int</span> x) { <span class="kw">return</span> x * <span class="nm">2</span>; }
+<span class="tp">void</span> <span class="fn">functie2</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) { <span class="cm">/* afisare etc */</span> }
+
+<span class="cm">// 5. Functia principala</span>
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="cm">// apelam functiile</span>
+    <kw>return</kw> <span class="nm">0</span>;
+}</pre>
+    </div>
+
+    <h2>Când folosesc void vs cu tip?</h2>
+    <div class="cheat-grid">
+      <div class="cheat-card" style="border-color:var(--green)">
+        <h4 style="color:var(--green)">Funcție CU TIP când...</h4>
+        <ul>
+          <li>Calculezi și ai nevoie de un rezultat: maxim, suma, factorial</li>
+          <li>Vrei să folosești rezultatul într-o expresie</li>
+          <li>Vrei să combini apeluri: <code>suma(a, maxim(b,c))</code></li>
+        </ul>
+      </div>
+      <div class="cheat-card" style="border-color:var(--blue)">
+        <h4 style="color:var(--blue)">Funcție VOID când...</h4>
+        <ul>
+          <li>Afișezi ceva pe ecran</li>
+          <li>Citești date cu cin</li>
+          <li>Modifici mai mulți parametri (prin referință)</li>
+          <li>Sortezi, inversezi un vector</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================ -->
+<!-- SPECIAL FOCUS -->
+<!-- ================================================================ -->
+<section id="special" class="section">
+  <div class="container">
+    <div class="page-header">
+      <span class="tag">⭐ Secțiune specială</span>
+      <h1>Focus: Funcții, Tablouri, Șiruri — Aprofundat</h1>
+    </div>
+
+    <h2>A. Funcții — tot ce trebuie să știi</h2>
+
+    <h3>Cum funcționează apelul unui subprogram? (pe stivă)</h3>
+    <div class="card card-blue">
+      <span class="tip-label tip-blue">EXPLICAȚIE VIZUALĂ</span>
+      <p>Când apelezi o funcție, programul:</p>
+      <ol>
+        <li><strong>Oprește</strong> execuția în main()</li>
+        <li><strong>Salvează</strong> adresa de revenire pe stivă</li>
+        <li><strong>Copiază</strong> parametrii actuali în parametrii formali (pe stivă)</li>
+        <li><strong>Execută</strong> corpul funcției</li>
+        <li><strong>Returnează</strong> rezultatul și revine la locul apelului</li>
+      </ol>
+    </div>
+
+    <h3>Exemple de apeluri valide și invalide</h3>
+    <p>Fie: <code>int f1(int a, float &b, char &c);</code></p>
+    <table>
+      <tr><th>Apel</th><th>Corect?</th><th>Motiv</th></tr>
+      <tr><td><code>p1 = f1(p1, p3, p2);</code></td><td><span class="badge badge-green">✅ DA</span></td><td>tipuri corecte: int, float&, char&</td></tr>
+      <tr><td><code>cout &lt;&lt; f1(2, p3, p2);</code></td><td><span class="badge badge-green">✅ DA</span></td><td>returnează char, se poate afișa</td></tr>
+      <tr><td><code>f1(3, p1, p2);</code></td><td><span class="badge badge-red">❌ NU</span></td><td>al doilea param e float&, nu int</td></tr>
+      <tr><td><code>f1();</code></td><td><span class="badge badge-red">❌ NU</span></td><td>lipsesc parametrii</td></tr>
+      <tr><td><code>f1(p1, M_PI, p2);</code></td><td><span class="badge badge-red">❌ NU</span></td><td>M_PI nu e variabilă — nu poate fi referință</td></tr>
+      <tr><td><code>f1('a'&gt;'A', p3, p2);</code></td><td><span class="badge badge-green">✅ DA</span></td><td>expresia se evaluează la int (0 sau 1)</td></tr>
+    </table>
+
+    <h2>B. Tablouri 1D în funcții — ghid complet</h2>
+
+    <h3>Toate operațiile standard pe un vector</h3>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// === CITIRE ===</span>
+<span class="tp">void</span> <span class="fn">citire</span>(<span class="tp">int</span> v[], <span class="tp">int</span> <span class="kw">&amp;</span>n) {
+    cout &lt;&lt; <span class="st">"n= "</span>; cin &gt;&gt; n;
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) cin &gt;&gt; v[i];
+}
+
+<span class="cm">// === AFISARE ===</span>
+<span class="tp">void</span> <span class="fn">afisare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) cout &lt;&lt; v[i] &lt;&lt; <span class="st">" "</span>;
+    cout &lt;&lt; <span class="st">"\n"</span>;
+}
+
+<span class="cm">// === SUMA ===</span>
+<span class="tp">int</span> <span class="fn">suma</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="tp">int</span> s = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) s += v[i];
+    <span class="kw">return</span> s;
+}
+
+<span class="cm">// === SUMA ELEMENTE PARE ===</span>
+<span class="tp">int</span> <span class="fn">suma_pare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="tp">int</span> s = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++)
+        <span class="kw">if</span> (v[i] % <span class="nm">2</span> == <span class="nm">0</span>) s += v[i]; <span class="cm">// doar elementele pare</span>
+    <span class="kw">return</span> s;
+}
+
+<span class="cm">// === MAXIM ===</span>
+<span class="tp">int</span> <span class="fn">maxim</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="tp">int</span> m = v[<span class="nm">0</span>];
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">1</span>; i&lt;n; i++) <span class="kw">if</span> (v[i] > m) m = v[i];
+    <span class="kw">return</span> m;
+}
+
+<span class="cm">// === INVERSARE ===</span>
+<span class="tp">void</span> <span class="fn">inversare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n/<span class="nm">2</span>; i++) {
+        <span class="tp">int</span> t = v[i]; v[i] = v[n-<span class="nm">1</span>-i]; v[n-<span class="nm">1</span>-i] = t;
+    }
+}
+
+<span class="cm">// === SORTARE CRESCATOARE (Bubble Sort) ===</span>
+<span class="tp">void</span> <span class="fn">sortare</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n-<span class="nm">1</span>; i++)
+        <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;n-<span class="nm">1</span>-i; j++)
+            <span class="kw">if</span> (v[j] > v[j+<span class="nm">1</span>]) {
+                <span class="tp">int</span> t=v[j]; v[j]=v[j+<span class="nm">1</span>]; v[j+<span class="nm">1</span>]=t;
+            }
+}
+
+<span class="cm">// === CAUTA ELEMENTUL K ===</span>
+<span class="tp">bool</span> <span class="fn">cauta</span>(<span class="tp">int</span> v[], <span class="tp">int</span> n, <span class="tp">int</span> k) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) <span class="kw">if</span> (v[i] == k) <span class="kw">return</span> <span class="nm">true</span>;
+    <span class="kw">return</span> <span class="nm">false</span>;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> a[<span class="nm">100</span>], n;
+    <span class="fn">citire</span>(a, n);
+    cout &lt;&lt; <span class="st">"Vector: "</span>; <span class="fn">afisare</span>(a, n);
+    cout &lt;&lt; <span class="st">"Suma: "</span> &lt;&lt; <span class="fn">suma</span>(a, n) &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Suma pare: "</span> &lt;&lt; <span class="fn">suma_pare</span>(a, n) &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Maxim: "</span> &lt;&lt; <span class="fn">maxim</span>(a, n) &lt;&lt; endl;
+    <span class="fn">sortare</span>(a, n);
+    cout &lt;&lt; <span class="st">"Sortat: "</span>; <span class="fn">afisare</span>(a, n);
+    <span class="fn">inversare</span>(a, n);
+    cout &lt;&lt; <span class="st">"Inversat: "</span>; <span class="fn">afisare</span>(a, n);
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+
+    <h2>C. Tablouri 2D în funcții</h2>
+
+    <h3>Parcurgerea matricei — modelul de bază</h3>
+    <div class="card card-yellow">
+      <span class="tip-label tip-yellow">REGULA DE AUR</span>
+      <p>La o matrice n×m: linia i merge de la 0 la n-1, coloana j de la 0 la m-1. Elementul de pe linia i, coloana j este <code>t[i][j]</code>.</p>
+    </div>
+    <div class="code-block">
+      <pre><span class="kw">const int</span> MAX = <span class="nm">100</span>;
+
+<span class="cm">// Suma elementelor pe fiecare linie</span>
+<span class="tp">void</span> <span class="fn">sume_linii</span>(<span class="tp">int</span> t[MAX][MAX], <span class="tp">int</span> n, <span class="tp">int</span> m) {
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) {
+        <span class="tp">int</span> s = <span class="nm">0</span>;
+        <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;m; j++) s += t[i][j];
+        cout &lt;&lt; <span class="st">"Suma liniei "</span> &lt;&lt; i &lt;&lt; <span class="st">": "</span> &lt;&lt; s &lt;&lt; endl;
+    }
+}
+
+<span class="cm">// Suma elementelor de pe perimetrul matricei</span>
+<span class="tp">int</span> <span class="fn">suma_perimetru</span>(<span class="tp">int</span> t[MAX][MAX], <span class="tp">int</span> n, <span class="tp">int</span> m) {
+    <span class="tp">int</span> s = <span class="nm">0</span>;
+    <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;m; j++) s += t[<span class="nm">0</span>][j] + t[n-<span class="nm">1</span>][j]; <span class="cm">// prima si ultima linie</span>
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">1</span>; i&lt;n-<span class="nm">1</span>; i++) s += t[i][<span class="nm">0</span>] + t[i][m-<span class="nm">1</span>]; <span class="cm">// prima si ultima col</span>
+    <span class="kw">return</span> s;
+}
+
+<span class="cm">// Interschimbare doua linii</span>
+<span class="tp">void</span> <span class="fn">schimba_linii</span>(<span class="tp">int</span> t[MAX][MAX], <span class="tp">int</span> m, <span class="tp">int</span> a, <span class="tp">int</span> b) {
+    <span class="kw">for</span> (<span class="tp">int</span> j=<span class="nm">0</span>; j&lt;m; j++) {
+        <span class="tp">int</span> temp = t[a][j];
+        t[a][j] = t[b][j];
+        t[b][j] = temp;
+    }
+}</pre>
+    </div>
+
+    <h2>D. Șiruri de caractere în funcții</h2>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">#include</span> <span class="st">&lt;cstring&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Numara vocalele dintr-un sir</span>
+<span class="tp">int</span> <span class="fn">numarVocale</span>(<span class="tp">char</span> s[]) {
+    <span class="tp">int</span> cnt = <span class="nm">0</span>;
+    <span class="tp">int</span> n = strlen(s);
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) {
+        <span class="tp">char</span> c = s[i];
+        <span class="kw">if</span> (c=='a'||c=='e'||c=='i'||c=='o'||c=='u'||
+            c=='A'||c=='E'||c=='I'||c=='O'||c=='U') cnt++;
+    }
+    <span class="kw">return</span> cnt;
+}
+
+<span class="cm">// Converteste la majuscule</span>
+<span class="tp">void</span> <span class="fn">toUpper</span>(<span class="tp">char</span> s[]) {
+    <span class="tp">int</span> n = strlen(s);
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++)
+        <span class="kw">if</span> (s[i] &gt;= <span class="st">'a'</span> &amp;&amp; s[i] &lt;= <span class="st">'z'</span>)
+            s[i] = s[i] - <span class="nm">32</span>; <span class="cm">// diferenta dintre 'a' si 'A' in ASCII</span>
+}
+
+<span class="cm">// Verifica daca e palindrom (se citeste la fel de la stanga si dreapta)</span>
+<span class="tp">bool</span> <span class="fn">palindrom</span>(<span class="tp">char</span> s[]) {
+    <span class="tp">int</span> n = strlen(s);
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n/<span class="nm">2</span>; i++)
+        <span class="kw">if</span> (s[i] != s[n-<span class="nm">1</span>-i]) <span class="kw">return</span> <span class="nm">false</span>;
+    <span class="kw">return</span> <span class="nm">true</span>;
+}
+
+<span class="cm">// Afiseaza vecinii unui caracter</span>
+<span class="tp">void</span> <span class="fn">vecini</span>(<span class="tp">char</span> s[], <span class="tp">char</span> c) {
+    <span class="tp">int</span> n = strlen(s);
+    <span class="kw">for</span> (<span class="tp">int</span> i=<span class="nm">0</span>; i&lt;n; i++) {
+        <span class="kw">if</span> (s[i] == c) {
+            cout &lt;&lt; <span class="st">"Vecinii lui "</span> &lt;&lt; c &lt;&lt; <span class="st">": "</span>;
+            <span class="kw">if</span> (i &gt; <span class="nm">0</span>) cout &lt;&lt; s[i-<span class="nm">1</span>] &lt;&lt; <span class="st">" "</span>;
+            <span class="kw">if</span> (i &lt; n-<span class="nm">1</span>) cout &lt;&lt; s[i+<span class="nm">1</span>];
+            cout &lt;&lt; endl;
+            <span class="kw">return</span>;
+        }
+    }
+    cout &lt;&lt; <span class="st">"Caracterul nu exista!\n"</span>;
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">char</span> s[<span class="nm">100</span>];
+    cout &lt;&lt; <span class="st">"Cuvant: "</span>; cin &gt;&gt; s;
+    cout &lt;&lt; <span class="st">"Vocale: "</span> &lt;&lt; <span class="fn">numarVocale</span>(s) &lt;&lt; endl;
+    cout &lt;&lt; <span class="st">"Palindrom: "</span> &lt;&lt; (<span class="fn">palindrom</span>(s) ? <span class="st">"DA"</span> : <span class="st">"NU"</span>) &lt;&lt; endl;
+    <span class="fn">vecini</span>(s, <span class="st">'a'</span>);
+    <span class="fn">toUpper</span>(s); cout &lt;&lt; <span class="st">"Majuscule: "</span> &lt;&lt; s &lt;&lt; endl;
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+
+    <h2>E. void vs cu tip — tabel de decizie</h2>
+    <table>
+      <tr><th>Situație</th><th>Tip funcție</th><th>Exemplu</th></tr>
+      <tr><td>Calculezi maximul</td><td><span class="badge badge-green">Cu tip int</span></td><td><code>int maxim(int v[], int n)</code></td></tr>
+      <tr><td>Calculezi suma</td><td><span class="badge badge-green">Cu tip int/double</span></td><td><code>int suma(int v[], int n)</code></td></tr>
+      <tr><td>Calculezi CMMDC</td><td><span class="badge badge-green">Cu tip int</span></td><td><code>int cmmdc(int a, int b)</code></td></tr>
+      <tr><td>Verifici o condiție</td><td><span class="badge badge-green">Cu tip bool</span></td><td><code>bool estePrim(int n)</code></td></tr>
+      <tr><td>Afișezi pe ecran</td><td><span class="badge badge-blue">void</span></td><td><code>void afisare(int v[], int n)</code></td></tr>
+      <tr><td>Citești date</td><td><span class="badge badge-blue">void</span></td><td><code>void citire(int v[], int &n)</code></td></tr>
+      <tr><td>Sortezi un vector</td><td><span class="badge badge-blue">void</span></td><td><code>void sortare(int v[], int n)</code></td></tr>
+      <tr><td>Inversezi elemente</td><td><span class="badge badge-blue">void</span></td><td><code>void inversare(int v[], int n)</code></td></tr>
+      <tr><td>Schimbi 2 variabile</td><td><span class="badge badge-blue">void</span></td><td><code>void schimba(int &a, int &b)</code></td></tr>
+    </table>
+
+    <h2>F. Exemple practice suplimentare</h2>
+
+    <h3>Funcție care verifică dacă un număr este prim</h3>
+    <div class="code-block">
+      <pre><span class="tp">bool</span> <span class="fn">estePrim</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">2</span>) <span class="kw">return</span> <span class="nm">false</span>; <span class="cm">// 0 si 1 nu sunt prime</span>
+    <span class="kw">for</span> (<span class="tp">int</span> i = <span class="nm">2</span>; i * i &lt;= n; i++) <span class="cm">// mergem pana la radacina patrata din n</span>
+        <span class="kw">if</span> (n % i == <span class="nm">0</span>) <span class="kw">return</span> <span class="nm">false</span>; <span class="cm">// gasit divizor → nu e prim</span>
+    <span class="kw">return</span> <span class="nm">true</span>; <span class="cm">// niciun divizor gasit → este prim</span>
+}
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> n = <span class="nm">17</span>;
+    <span class="kw">if</span> (<span class="fn">estePrim</span>(n)) cout &lt;&lt; n &lt;&lt; <span class="st">" este PRIM"</span>;
+    <span class="kw">else</span> cout &lt;&lt; n &lt;&lt; <span class="st">" NU este prim"</span>;
+}</pre>
+    </div>
+
+    <h3>Funcție recursivă: suma cifrelor</h3>
+    <div class="code-block">
+      <pre><span class="tp">int</span> <span class="fn">suma_cifre_rec</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n == <span class="nm">0</span>) <span class="kw">return</span> <span class="nm">0</span>;        <span class="cm">// caz de baza</span>
+    <span class="kw">return</span> n%<span class="nm">10</span> + <span class="fn">suma_cifre_rec</span>(n/<span class="nm">10</span>); <span class="cm">// ultima cifra + suma restului</span>
+}
+<span class="cm">// suma_cifre_rec(1234) = 4 + suma(123) = 4+3+suma(12) = ... = 4+3+2+1 = 10</span></pre>
+    </div>
+
+    <h3>Funcție recursivă: cifra maximă dintr-un număr</h3>
+    <div class="code-block">
+      <pre><span class="tp">int</span> <span class="fn">cifra_max_rec</span>(<span class="tp">int</span> n) {
+    <span class="kw">if</span> (n &lt; <span class="nm">10</span>) <span class="kw">return</span> n;  <span class="cm">// o singura cifra — ea insasi e maxima</span>
+    <span class="tp">int</span> ultima = n % <span class="nm">10</span>;
+    <span class="tp">int</span> max_rest = <span class="fn">cifra_max_rec</span>(n / <span class="nm">10</span>);
+    <span class="kw">return</span> (ultima > max_rest) ? ultima : max_rest;
+}</pre>
+    </div>
+
+    <h3>Program complet cu meniu (switch)</h3>
+    <div class="code-block">
+      <pre><span class="kw">#include</span> <span class="st">&lt;iostream&gt;</span>
+<span class="kw">using namespace</span> std;
+
+<span class="cm">// Toate functiile definite mai sus...</span>
+
+<span class="tp">int</span> <span class="fn">main</span>() {
+    <span class="tp">int</span> v[<span class="nm">100</span>], n;
+    <span class="tp">char</span> optiune;
+
+    <span class="fn">citire</span>(v, n);
+
+    <span class="kw">do</span> {
+        cout &lt;&lt; <span class="st">"\n=== MENIU ==="</span> &lt;&lt; endl;
+        cout &lt;&lt; <span class="st">"1 - Afisare"</span> &lt;&lt; endl;
+        cout &lt;&lt; <span class="st">"2 - Sortare"</span> &lt;&lt; endl;
+        cout &lt;&lt; <span class="st">"3 - Maxim"</span> &lt;&lt; endl;
+        cout &lt;&lt; <span class="st">"0 - Iesire"</span> &lt;&lt; endl;
+        cout &lt;&lt; <span class="st">"Alegere: "</span>; cin &gt;&gt; optiune;
+
+        <span class="kw">switch</span> (optiune) {
+            <span class="kw">case</span> <span class="st">'1'</span>: <span class="fn">afisare</span>(v, n); <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="st">'2'</span>: <span class="fn">sortare</span>(v, n); <span class="fn">afisare</span>(v, n); <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="st">'3'</span>: cout &lt;&lt; <span class="fn">maxim</span>(v, n); <span class="kw">break</span>;
+        }
+    } <span class="kw">while</span> (optiune != <span class="st">'0'</span>);
+
+    <span class="kw">return</span> <span class="nm">0</span>;
+}</pre>
+    </div>
+
+    <div class="card card-green" style="margin-top:2rem">
+      <span class="tip-label tip-green">SFATURI FINALE PENTRU TEST</span>
+      <ul>
+        <li>✅ Mereu scrie funcțiile <strong>înainte de main()</strong> sau folosește prototipuri</li>
+        <li>✅ Folosește <strong>&amp;</strong> (referință) când vrei ca funcția să <strong>modifice</strong> o variabilă</li>
+        <li>✅ La <strong>arrays</strong>, nu uita să transmiți și dimensiunea <code>n</code> ca parametru</li>
+        <li>✅ La <strong>recursivitate</strong>, primul lucru: scrie cazul de bază</li>
+        <li>✅ Testează funcțiile cu valori simple: <code>n=0</code>, <code>n=1</code>, vector cu un element</li>
+        <li>✅ La <code>void</code>, apelul e <strong>linie separată</strong>. La funcție cu tip, poți folosi în expresii</li>
+        <li>✅ Variabilele locale nu se inițializează automat — inițializează-le tu!</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const btns = document.querySelectorAll('.nav-btn');
+    btns.forEach(b => {
+      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(id)) {
+        b.classList.add('active');
+      }
+    });
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
